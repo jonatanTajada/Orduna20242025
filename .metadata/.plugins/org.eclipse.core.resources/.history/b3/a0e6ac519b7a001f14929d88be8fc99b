@@ -1,0 +1,41 @@
+package bloque3JAXB;
+
+import java.io.File;
+
+public class Bloque1Aitor {
+
+	
+	public static void main(String[] args) {
+		
+		String ruta = "D:\\PROGRAMACION\\DAM ORDUÑA 2023_2024\\2º Anio\\workspaceEclipseSegundoAnioOrduna\\accesoADatos\\src\\bloque3JAXB\\libros.xml";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.ComponentAddDialog">
+		<item key="x" value="646"/>
+		<item key="y" value="330"/>
+		<item key="width" value="627"/>
+		<item key="height" value="380"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.ComponentEditDialog">
+		<item key="x" value="678"/>
+		<item key="y" value="344"/>
+		<item key="width" value="563"/>
+		<item key="height" value="352"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.actions.assistant.LayoutAssistantWindow">
+		<item key="x" value="916"/>
+		<item key="y" value="464"/>
+	</section>
+</section>

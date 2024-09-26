@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+  <Book id="1">
+    <Title>Libro de Prueba</Title>
+    <Author>Autor de Prueba</Author>
+    <Genre>Ficción</Genre>
+    <Price>9.99</Price>
+    <Publish_date>2024-01-01</Publish_date>
+    <Description>Este es un libro de prueba.</Description>
+  </Book>
+</Catalog>

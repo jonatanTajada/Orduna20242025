@@ -1,0 +1,93 @@
+package componentesJavaSwingEjercicios2;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+public class GeneradorNumeros extends JFrame implements ActionListener {
+
+    private JSpinner spinnerNumero1;
+    private JSpinner spinnerNumero2;
+    private JTextField campoNumeroGenerado;
+    private JButton botonGenerar;
+
+    public GeneradorNumeros() {
+        // Configurar la ventana
+        setTitle("Generador de números");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Centrar la ventana
+        setLayout(new GridBagLayout()); // Usamos GridBagLayout para organizar los componentes
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Margen entre componentes
+        
+        // Crear componentes
+        JLabel etiquetaNumero1 = new JLabel("Número 1:");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(etiquetaNumero1, gbc);
+
+        spinnerNumero1 = new JSpinner(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        add(spinnerNumero1, gbc);
+
+        JLabel etiquetaNumero2 = new JLabel("Número 2:");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(etiquetaNumero2, gbc);
+
+        spinnerNumero2 = new JSpinner(new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        add(spinnerNumero2, gbc);
+
+        JLabel etiquetaResultado = new JLabel("Número generado:");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(etiquetaResultado, gbc);
+
+        campoNumeroGenerado = new JTextField(5);
+        campoNumeroGenerado.setEditable(false);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        add(campoNumeroGenerado, gbc);
+
+        botonGenerar = new JButton("Generar");
+        botonGenerar.addActionListener(this);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(botonGenerar, gbc);
+        
+        // Hacer visible la ventana
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Obtener los valores de los JSpinner
+        int numero1 = (int) spinnerNumero1.getValue();
+        int numero2 = (int) spinnerNumero2.getValue();
+
+        // Intercambiar si el número 1 es mayor que el número 2
+        int min = Math.min(numero1, numero2);
+        int max = Math.max(numero1, numero2);
+
+        // Generar un número aleatorio entre los dos valores
+        Random random = new Random();
+        int numeroGenerado = random.nextInt((max - min) + 1) + min;
+
+        // Mostrar el número generado en el JTextField
+        campoNumeroGenerado.setText(String.valueOf(numeroGenerado));
+    }
+
+    public static void main(String[] args) {
+        // Ejecutar la aplicación
+        SwingUtilities.invokeLater(() -> new GeneradorNumeros());
+    }
+}

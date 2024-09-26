@@ -1,0 +1,27 @@
+package ud1Procesos;
+
+public class Sumador {
+	
+	
+	
+	
+	
+	
+	
+	
+	//suma valores comprendidos entre dos numeros, ambos incluidos
+	public int sumadorDosNumeros(int num1, int num2) {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

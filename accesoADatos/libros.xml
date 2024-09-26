@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+  <Book id="1">
+    <Title>Libro 1</Title>
+    <Author>Autor 1</Author>
+    <Genre>Ficción</Genre>
+    <Price>19.99</Price>
+    <Publish_date>2024-01-01</Publish_date>
+    <Description>Una descripción para el libro 1.</Description>
+  </Book>
+  <Book id="2">
+    <Title>Libro 2</Title>
+    <Author>Autor 2</Author>
+    <Genre>Fantasía</Genre>
+    <Price>24.99</Price>
+    <Publish_date>2023-05-23</Publish_date>
+    <Description>Una descripción para el libro 2.</Description>
+  </Book>
+</Catalog>
+

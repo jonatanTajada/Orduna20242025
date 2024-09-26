@@ -1,0 +1,140 @@
+package ficheros;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+public class ManejoFicherosBloque3 {
+
+	public static void main(String[] args) {
+		try {
+			// Cargar el documento XML
+			File inputFile = new File("D:\\PROGRAMACION\\DAM ORDUÑA 2023_2024\\2º Anio\\workspaceEclipseSegundoAnioOrduna\\accesoADatos\\libros"); // Usar ruta relativa
+			if (!inputFile.exists()) {
+				System.out.println("El archivo libros.xml no se encuentra en la ruta especificada.");
+				return;
+			}
+
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(inputFile);
+			doc.getDocumentElement().normalize();
+
+			// Ejercicio 1: Mostrar los diferentes ID de cada libro
+			NodeList nodeList = doc.getElementsByTagName("Book");
+			System.out.println("=== IDs de los libros ===");
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element book = (Element) nodeList.item(i);
+				String id = book.getAttribute("id");
+				System.out.println(id);
+			}
+
+			// Ejercicio 2: Mostrar la lista de autores y títulos de los libros
+			System.out.println("\n=== Autores y títulos de los libros ===");
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element book = (Element) nodeList.item(i);
+				String author = book.getElementsByTagName("Author").item(0).getTextContent();
+				String title = book.getElementsByTagName("Title").item(0).getTextContent();
+				System.out.println("Autor: " + author + ", Título: " + title);
+			}
+
+			// Ejercicio 3: Mostrar los títulos y precios, ordenados de más económico a más
+			// caro
+			System.out.println("\n=== Títulos y precios ordenados ===");
+			List<Element> books = new ArrayList<>();
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				books.add((Element) nodeList.item(i));
+			}
+			books.sort((b1, b2) -> {
+				double price1 = Double.parseDouble(b1.getElementsByTagName("Price").item(0).getTextContent());
+				double price2 = Double.parseDouble(b2.getElementsByTagName("Price").item(0).getTextContent());
+				return Double.compare(price1, price2);
+			});
+			for (Element book : books) {
+				String title = book.getElementsByTagName("Title").item(0).getTextContent();
+				String price = book.getElementsByTagName("Price").item(0).getTextContent();
+				System.out.println("Título: " + title + ", Precio: " + price);
+			}
+
+			// Ejercicio 4: Mostrar los libros por su género
+			System.out.println("\n=== Libros por género ===");
+			Map<String, List<String>> genreMap = new HashMap<>();
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element book = (Element) nodeList.item(i);
+				String genre = book.getElementsByTagName("Genre").item(0).getTextContent();
+				String title = book.getElementsByTagName("Title").item(0).getTextContent();
+				genreMap.putIfAbsent(genre, new ArrayList<>());
+				genreMap.get(genre).add(title);
+			}
+			for (String genre : genreMap.keySet()) {
+				System.out.println("Género: " + genre);
+				for (String title : genreMap.get(genre)) {
+					System.out.println(" - " + title);
+				}
+			}
+
+			// Ejercicio 5: Traducir todas las etiquetas y guardar en libros_traducidos.xml
+			System.out.println("\n=== Traduciendo etiquetas y guardando en libros_traducidos.xml ===");
+			translateAndSaveXML(doc, "accesoADatos/libros_traducidos.xml");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Método para traducir las etiquetas y guardar el nuevo XML
+	private static void translateAndSaveXML(Document doc, String fileName) {
+		try {
+			NodeList catalogList = doc.getElementsByTagName("Catalog");
+			if (catalogList.getLength() > 0) {
+				Element catalog = (Element) catalogList.item(0);
+				doc.renameNode(catalog, null, "Catalogo");
+
+				NodeList books = catalog.getElementsByTagName("Book");
+				for (int i = 0; i < books.getLength(); i++) {
+					Element book = (Element) books.item(i);
+					doc.renameNode(book, null, "Libro");
+					renameElement(doc, book, "Title", "Título");
+					renameElement(doc, book, "Genre", "Genero");
+					renameElement(doc, book, "Price", "Precio");
+					renameElement(doc, book, "PublishDate", "FechaPublicacion");
+					renameElement(doc, book, "Description", "Descripción");
+					renameElement(doc, book, "Author", "Autor");
+				}
+
+				// Guardar el documento traducido
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(new File(fileName));
+				transformer.transform(source, result);
+
+				System.out.println("Traducción completada y guardada en " + fileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Método auxiliar para renombrar elementos
+	private static void renameElement(Document doc, Element parent, String oldTag, String newTag) {
+		NodeList elements = parent.getElementsByTagName(oldTag);
+		if (elements.getLength() > 0) {
+			Element oldElement = (Element) elements.item(0);
+			Element newElement = doc.createElement(newTag);
+			newElement.setTextContent(oldElement.getTextContent());
+			parent.replaceChild(newElement, oldElement);
+		}
+	}
+}

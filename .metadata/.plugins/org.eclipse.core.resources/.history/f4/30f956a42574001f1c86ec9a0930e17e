@@ -1,0 +1,86 @@
+package ficheros;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public class ManejoFicherosBloque2 {
+
+	public static void main(String[] args) {
+		
+		// 1.a. Crear una nueva Persona y guardarla en un fichero
+        Persona persona1 = new Persona(1, "Jonatan", 36, "12345678A");
+        guardarPersona(persona1, "persona1.ser");
+
+        // 1.b. Recuperar la persona del fichero
+        Persona personaRecuperada = recuperarPersona("persona1.ser");
+        System.out.println("Persona recuperada: " + personaRecuperada);
+
+        // 1.c. Modificar la persona y guardarla de nuevo
+        if (personaRecuperada != null) {
+            personaRecuperada.setEdad(37);
+            guardarPersona(personaRecuperada, "persona1.ser");
+        }
+
+        // 2.a. Crear un fichero de texto utilizando FileWriter
+        String contenidoTexto = "Esto es un texto de prueba, Estamos creando nuestro primer fichero de texto https://codigonline.com";
+        crearFicheroTexto("ficheroTexto.txt", contenidoTexto);
+
+        // 3. Leer un fichero de tipo imagen y mostrar su contenido binario
+        leerImagen("imagenEjemplo.jpg"); // Asegúrate de que el archivo "imagenEjemplo.jpg" exista	
+		
+		
+		
+	}
+	
+	//metodo para guardar persona en un fichero
+	 public static void guardarPersona(Persona persona, String nombreArchivo) {
+		 
+	        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nombreArchivo))) {
+	            oos.writeObject(persona);
+	            System.out.println("Persona guardada correctamente en " + nombreArchivo);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	 
+	 //metodo para recuperar un objeto Persona de un fichero
+	 public static Persona recuperarPersona(String nombreArchivo) {
+		 Persona persona = null;
+		 try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nombreArchivo))){
+			persona = (Persona)ois.readObject();
+			System.out.println("Persona recuperada correctamente de " + nombreArchivo);
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		 return persona;
+	 }
+	 
+	 //metodo para crear un fichero de texto utilizando FileWriter
+	 public static void crearFicheroTexto(String nombreArchivo, String contenido) {
+	        try (FileWriter fw = new FileWriter(nombreArchivo)) {
+	            fw.write(contenido);
+	            System.out.println("Fichero de texto creado correctamente en " + nombreArchivo);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	 
+	// Método para leer y mostrar el contenido de un fichero de tipo imagen
+	    public static void leerImagen(String nombreArchivo) {
+	        try (FileInputStream fis = new FileInputStream(nombreArchivo)) {
+	            System.out.println("Contenido binario del fichero de imagen:");
+	            int byteData;
+	            while ((byteData = fis.read()) != -1) {
+	                System.out.print(byteData + " ");
+	            }
+	            System.out.println("\n¿Se puede leer de forma correcta? No, los datos binarios no son interpretables como texto.");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
+}

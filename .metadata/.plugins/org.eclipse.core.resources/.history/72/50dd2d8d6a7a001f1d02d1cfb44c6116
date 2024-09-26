@@ -1,0 +1,8 @@
+package bloque3PruebasMias;
+
+import java.io.File;
+
+public class Bloque3EjemploMio {
+	File file = new File("resources/libro.xml");
+
+}

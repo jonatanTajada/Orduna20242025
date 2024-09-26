@@ -1,0 +1,108 @@
+package componentesJavaSwingEjercicios;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+public class Saludador extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Saludador frame = new Saludador();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Saludador() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		setSize(550, 450);
+		setLocation(350, 200);
+		setLayout(new BorderLayout());
+		
+		
+		//Panel central
+		 JPanel panel = new JPanel() {
+	            @Override
+	            protected void paintComponent(Graphics g) {
+	                super.paintComponent(g);
+	                // Cargar imagen de fondo
+	                ImageIcon imageIcon = new ImageIcon("java.jpg");
+	                Image image = imageIcon.getImage();
+	                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+	            }
+	        };
+	        panel.setLayout(new GridBagLayout()); // Usar GridBagLayout para centrar los componentes
+	        
+		
+		//Crear componetes
+	        JLabel lblUsuario = new JLabel("Escriba su nombe y dale al boton saludar");
+	        JTextField txtUsuario = new JTextField(15);
+	        JButton btnSaludar = new JButton("Saludar");
+//	        
+//	     Crear el layout y añadir los componentes
+//	        GridBagConstraints gbc = new GridBagConstraints();
+//	        gbc.insets = new Insets(10, 10, 10, 10);
+//
+//	        gbc.gridx = 0;
+//	        gbc.gridy = 0;
+//	        panel.add(label, gbc);
+//
+//	        gbc.gridx = 0;
+//	        gbc.gridy = 1;
+//	        panel.add(textField, gbc);
+//
+//	        gbc.gridx = 0;
+//	        gbc.gridy = 2;
+//	        panel.add(botonSaludar, gbc);
+	        
+	        //Añadir AcionListener al boton
+	        btnSaludar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					String nombre= txtUsuario.getText();
+					JOptionPane.showMessageDialog(null, "Hola " + nombre + "!", "Message", JOptionPane.INFORMATION_MESSAGE);
+				}
+			});
+
+	        
+		add(panel);
+		setVisible(true);    
+	        
+	        
+	}
+
+	
+	
+	
+}

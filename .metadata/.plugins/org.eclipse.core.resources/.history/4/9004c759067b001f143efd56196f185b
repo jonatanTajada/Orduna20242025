@@ -1,0 +1,59 @@
+package ud1Procesos;
+
+public class AbrirProcesos {
+
+	/**
+	 * Procesos: abrir primero el blockNotas y cuando se cierre se abra el pain.
+	 * @param args
+	 */
+	
+	public static void main(String[] args) {
+		
+		//1.Crear procesos
+		ProcessBuilder blocNotas;
+		ProcessBuilder paint;
+		
+	try {
+		
+		blocNotas = new ProcessBuilder("notepad.exe");
+		paint = new ProcessBuilder("mspaint.exe");
+		
+		//2. Ejecutar proceso Bloc de Notas
+		Process pBlocNotas = blocNotas.start();
+		System.out.println("Block de notas abierto");
+		
+		//Esperar a que termine el proceso 
+		pBlocNotas.waitFor();
+		System.out.println("Block de notas cerrada.");
+		
+		//3.Abrir el pain
+		Process pPaint = paint.start();
+		System.out.println("El paint esta abierto");
+		
+		pPaint.waitFor();
+		System.out.println("Paint cerrado");
+		
+		
+		
+	} catch (Exception e) {
+		e.getMessage();
+	}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
