@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename package &apos;ud1&apos; to &apos;ud1Procesos&apos;&#x0D;&#x0A;- Original project: &apos;programacionDeServiciosYProcesos&apos;&#x0D;&#x0A;- Original element: &apos;programacionDeServiciosYProcesos/src/ud1&apos;&#x0D;&#x0A;- Renamed element: &apos;programacionDeServiciosYProcesos/src/ud1Procesos&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;ud1&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;ud1" name="ud1Procesos" qualified="false" references="true" stamp="1726649087509" textual="false" version="1.0"/>
-</session>
