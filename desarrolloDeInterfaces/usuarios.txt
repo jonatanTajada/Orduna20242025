@@ -1,3 +1,0 @@
-jonatan,123
-usuario1,contraseña1
-jonatan,1234

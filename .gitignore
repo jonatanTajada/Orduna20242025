@@ -1,1 +1,15 @@
-/.metadata/
+.metadata/
+.classpath
+.project
+.settings/
+target/
+.gradle/
+build/
+bin/
+out/
+*.class
+Thumbs.db
+*.log
+.svn/
+.hg/
+ 

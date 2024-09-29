@@ -1,2 +1,0 @@
-Carga: 1, Cantidad: 12, Camión: Camion[Matricula=1234gfg, Camionero=adsdasdasdqw, Capacidad=0]
-Carga: 1, Cantidad: 12, Camión: Camion[Matricula=1222, Camionero=aser, Capacidad=0]
