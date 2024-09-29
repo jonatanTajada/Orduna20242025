@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<libros>
+    <libro>
+        <titulo>El Señor de los Anillos</titulo>
+        <autor>J.R.R. Tolkien</autor>
+        <precio>12.99</precio>
+    </libro>
+    <libro>
+        <titulo>Clean Code</titulo>
+        <autor>Robert C. Martin</autor>
+        <precio>28.99</precio>
+    </libro>
+    <libro>
+        <titulo>Effective Java</titulo>
+        <autor>Joshua Bloch</autor>
+        <precio>35.50</precio>
+    </libro>
+    <libro>
+        <titulo>Design Patterns</titulo>
+        <autor>Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides</autor>
+        <precio>40.00</precio>
+    </libro>
+</libros>
+

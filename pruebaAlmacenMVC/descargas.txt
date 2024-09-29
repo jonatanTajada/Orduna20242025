@@ -1,0 +1,1 @@
+Descarga: 1, Cantidad: 3, Camión: Camion[Matricula=1111aaa, Camionero=asdq, Capacidad=0]

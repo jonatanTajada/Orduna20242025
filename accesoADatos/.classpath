@@ -6,5 +6,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/PROGRAMACION/DAM ORDUNA 2024_2025/SegundoAnio/workspaceEclipseSegundoAnioOrduna/accesoADatos/libs/javax.activation-api-1.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/PROGRAMACION/DAM ORDUNA 2024_2025/SegundoAnio/workspaceEclipseSegundoAnioOrduna/accesoADatos/libs/jaxb-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/PROGRAMACION/DAM ORDUNA 2024_2025/SegundoAnio/workspaceEclipseSegundoAnioOrduna/accesoADatos/libs/jaxb-runtime-2.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/PROGRAMACION/DAM ORDUNA 2024_2025/SegundoAnio/workspaceEclipseSegundoAnioOrduna/accesoADatos/libs/txw2-2.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/PROGRAMACION/DAM ORDUNA 2024_2025/SegundoAnio/workspaceEclipseSegundoAnioOrduna/accesoADatos/libs/istack-commons-runtime-3.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
