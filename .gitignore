@@ -6,7 +6,6 @@ target/
 .gradle/
 build/
 bin/
-out/
 *.class
 Thumbs.db
 *.log
