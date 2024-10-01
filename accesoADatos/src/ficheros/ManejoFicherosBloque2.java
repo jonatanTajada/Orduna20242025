@@ -1,6 +1,12 @@
 package ficheros;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +104,7 @@ public class ManejoFicherosBloque2 {
         }
     }
 
+    
     // Metodo para crear un fichero de texto utilizando FileWriter
     public static void crearFicheroTexto(String ruta, String contenido) {
         try (FileWriter fw = new FileWriter(ruta)) {
@@ -107,4 +114,17 @@ public class ManejoFicherosBloque2 {
             e.printStackTrace();
         }
     }
+    
+ // Metodo para crear un fichero de texto utilizando BufferedWriter con codificación UTF-8
+//    public static void crearFicheroTexto(String ruta, String contenido) {
+//        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ruta), StandardCharsets.UTF_8))) {
+//            writer.write(contenido);
+//            System.out.println("Fichero de texto creado correctamente en " + ruta);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    
+    
 }
