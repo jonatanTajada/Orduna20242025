@@ -16,6 +16,16 @@ public class ControlPasajeros extends JFrame {
 	private JPanel resultadoPanel;
 	private int revisados = 0;
 	private int noRevisados = 0;
+	
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> {
+			ControlPasajeros control = new ControlPasajeros();
+			control.setVisible(true);
+		});
+	}
+
+	
 
 	public ControlPasajeros() {
 		setTitle("Revisados: 0  No revisados: 0");
@@ -102,10 +112,4 @@ public class ControlPasajeros extends JFrame {
 		resultadoPanel.repaint();
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			ControlPasajeros control = new ControlPasajeros();
-			control.setVisible(true);
-		});
-	}
 }

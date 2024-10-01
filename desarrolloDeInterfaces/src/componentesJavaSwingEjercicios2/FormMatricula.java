@@ -69,7 +69,7 @@ public class FormMatricula implements ActionListener {
 		areaTexto.setEditable(false); 
 		scrollPane = new JScrollPane(areaTexto);
 
-		// Asegurarse de que el JScrollPane se expanda al máximo
+		// Asegurarse de que el JScrollPane se expanda al maximo
 		scrollPane.setPreferredSize(new Dimension(ANCHO, ALTO));
 		ventana.add(scrollPane, BorderLayout.CENTER);
 

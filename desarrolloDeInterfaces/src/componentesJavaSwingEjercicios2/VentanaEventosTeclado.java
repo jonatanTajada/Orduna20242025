@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class VentanaEventosTeclado extends JFrame implements KeyListener, ActionListener {
 
+	
+	private static final long serialVersionUID = -431715382133276967L;
 	private JTextArea areaEntradaTexto, areaSalidaTexto;
 	private JLabel lblContadorVocales, lblContadorPalabras;
 	private int contadorVocales = 0;

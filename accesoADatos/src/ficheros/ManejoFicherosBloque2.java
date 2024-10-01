@@ -32,7 +32,8 @@ public class ManejoFicherosBloque2 {
         crearFicheroTexto("listaPersonas.txt", contenidoTexto);
     }
 
-    // Método para guardar una persona en una lista y escribir toda la lista en el archivo
+//-------------------------------------------------------------------------------------------------------
+    // Metodo para guardar una persona en una lista y escribir toda la lista en el archivo
     public static void guardarPersona(Persona persona, String ruta) {
         List<Persona> personas = leerTodasLasPersonas(ruta);
         personas.add(persona);
@@ -45,7 +46,7 @@ public class ManejoFicherosBloque2 {
         }
     }
 
-    // Método para leer todas las personas del archivo
+    // Metodo para leer todas las personas del archivo
     @SuppressWarnings("unchecked")
     public static List<Persona> leerTodasLasPersonas(String ruta) {
         List<Persona> personas = new ArrayList<>();
@@ -62,7 +63,7 @@ public class ManejoFicherosBloque2 {
         return personas;
     }
 
-    // Método para recuperar una persona por nombre
+    // Metodo para recuperar una persona por nombre
     public static Persona recuperarPersona(String ruta, String nombreBuscado) {
         List<Persona> personas = leerTodasLasPersonas(ruta);
 
@@ -77,7 +78,7 @@ public class ManejoFicherosBloque2 {
         return null;
     }
 
-    // Método para modificar una persona y sobrescribir el archivo con la lista actualizada
+    // Metodo para modificar una persona y sobrescribir el archivo con la lista actualizada
     public static void modificarPersona(Persona personaModificada, String ruta) {
         List<Persona> personas = leerTodasLasPersonas(ruta);
 
@@ -97,7 +98,7 @@ public class ManejoFicherosBloque2 {
         }
     }
 
-    // Método para crear un fichero de texto utilizando FileWriter
+    // Metodo para crear un fichero de texto utilizando FileWriter
     public static void crearFicheroTexto(String ruta, String contenido) {
         try (FileWriter fw = new FileWriter(ruta)) {
             fw.write(contenido);

@@ -90,9 +90,9 @@ public class ContarVocales2 extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // Detectar si se presiona la tecla "Esc"
+      
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            System.exit(0);  // Salir de la aplicación
+            System.exit(0);  
         }
     }
 

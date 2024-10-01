@@ -19,7 +19,9 @@ import javax.swing.SwingUtilities;
 
 public class GeneradorNumeros extends JFrame implements ActionListener {
 
-    private JSpinner spinnerNumero1;
+   
+	private static final long serialVersionUID = 3962698082204987571L;
+	private JSpinner spinnerNumero1;
     private JSpinner spinnerNumero2;
     private JTextField campoNumeroGenerado;
     private JButton botonGenerar;
