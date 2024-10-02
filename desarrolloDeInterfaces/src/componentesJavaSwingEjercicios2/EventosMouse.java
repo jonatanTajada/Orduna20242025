@@ -10,6 +10,7 @@ public class EventosMouse extends JFrame implements MouseListener {
 	private static final long serialVersionUID = -2499287175555730331L;
 	private JLabel titulo;
 	private JButton boton;
+	private JLabel etiquetaInferior;
 
 	public static void main(String[] args) {
 		// Crear y mostrar la ventana
@@ -17,7 +18,6 @@ public class EventosMouse extends JFrame implements MouseListener {
 		ventana.setVisible(true);
 	}
 
-	
 	public EventosMouse() {
 		// Configuración de la ventana
 		setTitle("DAM 2 Interfaces Eventos del Mouse");
@@ -39,11 +39,10 @@ public class EventosMouse extends JFrame implements MouseListener {
 		add(boton, BorderLayout.CENTER);
 
 		// Crear etiqueta para mostrar mensajes en la parte inferior
-		JLabel etiquetaInferior = new JLabel("Salio del Titulo", JLabel.LEFT);
+		etiquetaInferior = new JLabel("Salio del Titulo", JLabel.LEFT);
+		etiquetaInferior.addMouseListener(this); // Añadir listener a la etiqueta inferior
 		add(etiquetaInferior, BorderLayout.SOUTH);
 	}
-	
-	
 
 	// Métodos del MouseListener para gestionar los eventos del mouse
 
@@ -72,6 +71,10 @@ public class EventosMouse extends JFrame implements MouseListener {
 	public void mouseEntered(MouseEvent e) {
 		if (e.getSource() == titulo) {
 			titulo.setText("Entró al Título");
+		} else if (e.getSource() == boton) {
+			boton.setText("Entró al Botón");
+		} else if (e.getSource() == etiquetaInferior) {
+			etiquetaInferior.setText("Entró al Pie");
 		}
 	}
 
@@ -79,7 +82,10 @@ public class EventosMouse extends JFrame implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		if (e.getSource() == titulo) {
 			titulo.setText("Salio del Titulo");
+		} else if (e.getSource() == boton) {
+			boton.setText("Presioname");
+		} else if (e.getSource() == etiquetaInferior) {
+			etiquetaInferior.setText("Salio del Pie");
 		}
 	}
-
 }

@@ -16,7 +16,7 @@ public class EventosMouse2 extends JFrame implements MouseListener {
     private int contadorZonaTitulo = 0;
     private int contadorZonaBoton = 0;
     private int contadorZonaInferior = 0;
-    private int contadorPresionarBoton = 0; // Contador para cuántas veces se presiona el botón
+    private int contadorPresionarBoton = 0; 
 
     public static void main(String[] args) {
         // Crear y mostrar la ventana
@@ -35,23 +35,23 @@ public class EventosMouse2 extends JFrame implements MouseListener {
         // Crear el título y añadir eventos de mouse
         titulo = new JLabel("Eventos del Ratón", JLabel.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo.addMouseListener(this); // Añadir listener al título
+        titulo.addMouseListener(this); 
         add(titulo, BorderLayout.NORTH);
 
         // Crear botón con eventos de mouse
         boton = new JButton("Presioname");
         boton.setFont(new Font("Arial", Font.PLAIN, 16));
-        boton.addMouseListener(this); // Añadir listener al botón
+        boton.addMouseListener(this); 
         add(boton, BorderLayout.CENTER);
 
         // Crear etiqueta para mostrar mensajes en la parte inferior
         etiquetaInferior = new JLabel("Zona inferior", JLabel.LEFT);
-        etiquetaInferior.addMouseListener(this); // Añadir listener al pie
+        etiquetaInferior.addMouseListener(this); 
         add(etiquetaInferior, BorderLayout.SOUTH);
 
         // Crear un JLabel para mostrar los contadores
         contadorLabel = new JLabel();
-        actualizarContadores(); // Inicializar los valores
+        actualizarContadores(); 
         add(contadorLabel, BorderLayout.EAST);
     }
 
