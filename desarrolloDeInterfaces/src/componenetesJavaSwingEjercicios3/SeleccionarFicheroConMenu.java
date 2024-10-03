@@ -1,10 +1,18 @@
 package componenetesJavaSwingEjercicios3;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileFilter;
 
 public class SeleccionarFicheroConMenu extends JFrame {
 
@@ -16,7 +24,7 @@ public class SeleccionarFicheroConMenu extends JFrame {
 		setSize(500, 450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setLayout(new GridBagLayout());
+		setLayout(new BorderLayout());
 
 		// Crear componentes
 		rutaTextField = new JTextField();
@@ -32,19 +40,10 @@ public class SeleccionarFicheroConMenu extends JFrame {
 		menuBar.add(menuArchivo);
 		setJMenuBar(menuBar);
 
-		// Añadir componentes al layout
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
+		// Añadir JTextField en la parte central con BorderLayout
+		add(rutaTextField, BorderLayout.CENTER);
 
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = 2;
-		gbc.weightx = 1.0; // Permite que el JTextField se expanda horizontalmente
-		gbc.fill = GridBagConstraints.HORIZONTAL; // Hace que el JTextField ocupe todo el espacio horizontal
-
-		add(rutaTextField, gbc);
-
-		// Evento para abrir JFileChooser y seleccionar fichero .txt en "Abrir..."
+		// Evento para abrir JFileChooser
 		menuItemAbrir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -52,7 +51,7 @@ public class SeleccionarFicheroConMenu extends JFrame {
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 				// Filtro para solo permitir archivos .txt
-				fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+				fileChooser.setFileFilter(new FileFilter() {
 					@Override
 					public boolean accept(File f) {
 						return f.isDirectory() || f.getName().toLowerCase().endsWith(".txt");
