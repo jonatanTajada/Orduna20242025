@@ -24,8 +24,9 @@ public class Ejercicio2ActualizarDatos {
 
             // 2. Crear la FK con Departamento
             String sqlAnadirFK = "ALTER TABLE Empleado "
-                    + "ADD CONSTRAINT fk_departamento "
-                    + "FOREIGN KEY (departamento_id) REFERENCES Departamento(id)";
+            					+ "ADD CONSTRAINT fk_departamento "
+            					+ "FOREIGN KEY (departamento_id) REFERENCES Departamento(id)";
+            
             try (PreparedStatement psAnadirFK = conexion.prepareStatement(sqlAnadirFK)) {
                 psAnadirFK.executeUpdate();
                 System.out.println("FK creada correctamente en la tabla empleado.");
