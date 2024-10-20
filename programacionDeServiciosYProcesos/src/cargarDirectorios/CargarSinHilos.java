@@ -23,6 +23,7 @@ public class CargarSinHilos extends JFrame {
     }
 
     public CargarSinHilos() {
+    	
         setTitle("Cargar Directorios: Sin Hilos");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,17 +44,19 @@ public class CargarSinHilos extends JFrame {
     }
 
     private void cargarDirectorios() {
-        // Reducir el ámbito de búsqueda para pruebas rápidas.
+    	
+        
         File unidadC = new File("C:\\Users\\Jonathan\\Desktop");
         listarArchivos(unidadC);
     }
 
     private void listarArchivos(File archivo) {
         if (cancelado) {
-            return; // Salir si la operación fue cancelada
+            return; 
         }
 
         if (archivo.isDirectory()) {
+        	
             textArea.append("Directorio: " + archivo.getAbsolutePath() + "\n");
             File[] contenido = archivo.listFiles();
             if (contenido != null) {
@@ -67,7 +70,7 @@ public class CargarSinHilos extends JFrame {
     }
 
     private void cancelarCarga() {
-        cancelado = true; // Señala que la carga ha sido cancelada
+        cancelado = true; 
         textArea.append("Carga cancelada.\n");
     }
 }

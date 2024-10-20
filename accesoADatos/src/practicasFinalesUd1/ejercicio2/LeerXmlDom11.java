@@ -11,6 +11,7 @@ import java.io.File;
 public class LeerXmlDom11 {
 	
 	public static void main(String[] args) {
+		
 		try {
 			File inputFile = new File("alumnos.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

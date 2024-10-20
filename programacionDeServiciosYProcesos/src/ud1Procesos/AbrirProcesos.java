@@ -8,9 +8,11 @@ public class AbrirProcesos {
         String[] procesos = { "notepad.exe", "mspaint.exe" }; 
         abrirprocesos(procesos);
     }
+    //------------------------------------------------------------------------
 
     // metodo que recibe una lista de procesos y los abre secuencialmente
     public static void abrirprocesos(String[] procesos) {
+    	
         try {
             for (String proceso : procesos) {
                 
@@ -22,6 +24,7 @@ public class AbrirProcesos {
                 p.waitFor();
                 System.out.println(proceso + " cerrado.");
             }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

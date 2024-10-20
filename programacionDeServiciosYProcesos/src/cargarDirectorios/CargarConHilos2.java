@@ -25,6 +25,7 @@ public class CargarConHilos2 extends JFrame {
         add(new JScrollPane(textArea), BorderLayout.CENTER);
 
         JButton cargarBtn = new JButton("Cargar Directorios");
+        
         cargarBtn.addActionListener(e -> {
             Thread hilo = new Thread(() -> cargarDirectorios());
             hilo.start();
@@ -38,13 +39,17 @@ public class CargarConHilos2 extends JFrame {
         setVisible(true);
     }
 
+    
     private void cargarDirectorios() {
         File unidadC = new File("C:\\");
         listarArchivos(unidadC);
     }
 
+    
     private void listarArchivos(File archivo) {
+    	
         if (archivo.isDirectory()) {
+        	
             textArea.append("Directorio: " + archivo.getAbsolutePath() + "\n");
             File[] contenido = archivo.listFiles();
             if (contenido != null) {

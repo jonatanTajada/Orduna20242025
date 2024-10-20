@@ -19,7 +19,9 @@ public class QuicksortVisualizer extends JFrame {
 	}
 	
 //-----------------------------------------------------------------------------------------------------------------------------------	
+	
 	public QuicksortVisualizer() {
+		
 		setTitle("Visualización de Quicksort");
 		setSize(1200, 1000);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

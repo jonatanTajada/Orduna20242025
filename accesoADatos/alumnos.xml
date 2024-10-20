@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alumnos>
+    <alumno>
+        <apellido>Garcia</apellido>
+        <edad>20</edad>
+        <nota>8.5</nota>
+    </alumno>
+    <alumno>
+        <apellido>Lopez</apellido>
+        <edad>22</edad>
+        <nota>9.0</nota>
+    </alumno>
+</alumnos>

@@ -44,7 +44,7 @@ public class CargarConHilos extends JFrame {
         cancelarBtn.addActionListener(e -> cancelarCarga());
         add(cancelarBtn, BorderLayout.SOUTH);
 
-        // Mostrar la ventana y luego iniciar la carga de archivos en segundo plano.
+        
         setVisible(true);
         cargarDirectoriosEnSegundoPlano();
     }
@@ -52,6 +52,7 @@ public class CargarConHilos extends JFrame {
     private void cargarDirectoriosEnSegundoPlano() {
     	
         worker = new SwingWorker<>() {
+        	
             @Override
             protected Void doInBackground() {
                 File unidadC = new File("C:\\");
@@ -59,6 +60,7 @@ public class CargarConHilos extends JFrame {
                 return null;
             }
 
+            
             private void listarArchivos(File archivo) {
             	
                 if (isCancelled()) {
@@ -94,7 +96,7 @@ public class CargarConHilos extends JFrame {
 
     private void cancelarCarga() {
         if (worker != null && !worker.isCancelled()) {
-            worker.cancel(true); // Cancelar el proceso de forma inmediata.
+            worker.cancel(true); 
             textArea.append("Carga cancelada.\n");
         }
     }
