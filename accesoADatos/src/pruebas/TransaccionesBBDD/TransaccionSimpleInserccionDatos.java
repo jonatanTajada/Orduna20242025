@@ -37,9 +37,6 @@ public class TransaccionSimpleInserccionDatos {
 
 				ps2.setString(1, "Mari Mar");
 				ps2.setInt(2, (-5 > 0) ? -5 : 0); // Esto evitará la inserción de un valor negativo
-
-
-
 				ps2.executeUpdate();
 
 				// confirmar transaccion

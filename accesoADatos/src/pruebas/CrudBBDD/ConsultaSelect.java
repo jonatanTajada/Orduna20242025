@@ -30,11 +30,12 @@ public class ConsultaSelect {
 
 			System.out.println("***Lista de la tabla Personas***\n ");
 			while (rs.next()) {
+				
 				int id = rs.getInt("id");
 				String nombre = rs.getString("nombre");
 				String edad = rs.getString("edad");
 
-				System.out.println("ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad);
+				System.out.println("ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad );
 
 			}
 

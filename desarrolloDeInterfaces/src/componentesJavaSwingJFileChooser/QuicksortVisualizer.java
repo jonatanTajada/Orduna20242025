@@ -87,6 +87,7 @@ public class QuicksortVisualizer extends JFrame {
 
 //--------------- Clase interna para el panel de visualización---------------------------------------------------------------------------------------------------------------
 	private class VisualizacionPanel extends JPanel {
+		
 		private int[] alturas;
 
 		public VisualizacionPanel(int[] alturas) {
