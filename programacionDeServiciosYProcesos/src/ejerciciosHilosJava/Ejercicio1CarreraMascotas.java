@@ -21,14 +21,14 @@ public class Ejercicio1CarreraMascotas extends Thread {
 
 		// La mascota avanza mientra no ha llegado a la meta y no haya ganador
 		while (distanciaRecorrida < META && !hayGanador) {
-			int avanzando = random.nextInt(3) + 1; // la mascota avanza en 1 y 3 metros
+			int avanzando = random.nextInt(3) + 1; 
 			distanciaRecorrida += avanzando;
 
 			System.out.println(nombre + ": ha recorrido  " + distanciaRecorrida + " metros.");
 
-			// tiepo que tarda en avanzar
 			try {
 				Thread.sleep(random.nextInt(500) + 1000);
+				
 			} catch (InterruptedException e) {
 				System.err.println("La mascota " + nombre + " ha sido interrumpida.");
 			}

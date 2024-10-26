@@ -45,11 +45,13 @@ public class SelectorFotos extends JFrame {
 	 * Create the frame.
 	 */
 	public SelectorFotos() {
+		
 		setTitle("Selector Fotos");
 		setSize(750, 500);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); 
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
+		
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -136,6 +138,7 @@ public class SelectorFotos extends JFrame {
 
 	// Método para mostrar una imagen en el JLabel
 	private void mostrarImagen(String nombreImagen) {
+		
 		ImageIcon icono = new ImageIcon(nombreImagen);
 		Image imagen = icono.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH); // Escalar imagen
 		lblImage.setIcon(new ImageIcon(imagen)); // Cambiar el icono del JLabel

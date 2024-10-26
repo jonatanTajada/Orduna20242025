@@ -4,22 +4,25 @@ import java.util.Scanner;
 
 public class Ejercicio4Trabajador extends Thread {
 
-	private String nombre, dia, entradaTrabajador;
+	private String nombre;
+	private String dia;
+	private String entradaTrabajador;
 	private static final String HORA_ENTRADA = "08:00";
 
-	// Constructor que inicializa el trabajador
+	
 	public Ejercicio4Trabajador(String nombre, String dia, String entradaTrabajador) {
 		this.nombre = nombre;
 		this.dia = dia;
 		this.entradaTrabajador = entradaTrabajador;
 	}
 
-	//----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------
+	
 	public static void main(String[] args) {
+		
 		Scanner scanner = new Scanner(System.in);
 
-		// Pedimos cuántos trabajadores ingresar
-		System.out.println("¿Cuántos trabajadores deseas ingresar?");
+		System.out.print("¿Cuantos trabajadores deseas ingresar?: ");
 		int cantidadTrabajadores = Integer.parseInt(scanner.nextLine());
 
 		// Recogemos los datos de los trabajadores
@@ -30,10 +33,12 @@ public class Ejercicio4Trabajador extends Thread {
 
 		scanner.close();
 	}
+	
 //--------------------------------------------------------------------------------------------------------------- 
 	
-	// Método para recoger los datos de los trabajadores
+	// metodo para recoger los datos de los trabajadores
 	private static Ejercicio4Trabajador[] recogerDatosTrabajadores(int cantidadTrabajadores, Scanner scanner) {
+		
 		Ejercicio4Trabajador[] trabajadores = new Ejercicio4Trabajador[cantidadTrabajadores];
 
 		// Recolectar los datos de los trabajadores
@@ -59,9 +64,9 @@ public class Ejercicio4Trabajador extends Thread {
 		return trabajadores;
 	}
 
-	// Método para ejecutar los hilos de los trabajadores
+	// metodo para ejecutar los hilos de los trabajadores
 	private static void ejecutarTrabajadores(Ejercicio4Trabajador[] trabajadores) {
-		// Iniciar los hilos
+	
 		for (Ejercicio4Trabajador trabajador : trabajadores) {
 			trabajador.start();
 		}
@@ -85,13 +90,14 @@ public class Ejercicio4Trabajador extends Thread {
 		}
 	}
 
-	// Método para convertir la hora de "HH:mm" a entero para comparación
+	// metodo para convertir la hora de "HH:mm" a entero para comparación
 	private int convertirHora(String hora) {
+		
 		String[] partes = hora.split(":");
 		return Integer.parseInt(partes[0]) * 100 + Integer.parseInt(partes[1]);
 	}
 
-	// Método para validar si la hora está en el formato correcto "HH:mm"
+	// metodo para validar si la hora está en el formato correcto "HH:mm"
 	private static boolean esHoraValida(String hora) {
 		return hora.matches("^([01]\\d|2[0-3]):([0-5]\\d)$");
 	}

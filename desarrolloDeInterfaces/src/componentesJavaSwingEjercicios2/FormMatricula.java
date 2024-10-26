@@ -19,6 +19,7 @@ public class FormMatricula implements ActionListener {
 
 	private final int ANCHO = 550;
 	private final int ALTO = 450;
+	
 	private JFrame ventana;
 	private JLabel lMatricula;
 	private JTextField tMatricula;
