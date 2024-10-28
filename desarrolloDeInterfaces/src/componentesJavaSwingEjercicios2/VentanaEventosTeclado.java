@@ -11,12 +11,14 @@ public class VentanaEventosTeclado extends JFrame implements KeyListener, Action
 
 	
 	private static final long serialVersionUID = -431715382133276967L;
+	
 	private JTextArea areaEntradaTexto, areaSalidaTexto;
 	private JLabel lblContadorVocales, lblContadorPalabras;
 	private int contadorVocales = 0;
 	private JButton btnGuardar, btnCambiarColor;
 
 	public VentanaEventosTeclado() {
+		
 		setTitle("Eventos del Teclado");
 		setSize(600, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

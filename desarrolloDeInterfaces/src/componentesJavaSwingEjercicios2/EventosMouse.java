@@ -13,12 +13,14 @@ public class EventosMouse extends JFrame implements MouseListener {
 	private JLabel etiquetaInferior;
 
 	public static void main(String[] args) {
+		
 		// Crear y mostrar la ventana
 		EventosMouse ventana = new EventosMouse();
 		ventana.setVisible(true);
 	}
 
 	public EventosMouse() {
+		
 		// Configuración de la ventana
 		setTitle("DAM 2 Interfaces Eventos del Mouse");
 		setSize(400, 300);
