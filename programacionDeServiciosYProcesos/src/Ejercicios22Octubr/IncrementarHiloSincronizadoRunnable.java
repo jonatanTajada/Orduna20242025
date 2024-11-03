@@ -1,6 +1,6 @@
-package Ejercicios22Octubre;
+package Ejercicios22Octubr;
 
-class IncrementarHiloSincronizado extends Thread {
+class IncrementarHiloSincronizadoRunnable implements Runnable {
     public static int contador = 0;
 
     @Override
@@ -10,17 +10,16 @@ class IncrementarHiloSincronizado extends Thread {
         }
     }
 
-    // metodo sincronizado para incrementar la variable
     private synchronized static void incrementar() {
         contador++;
     }
 
     public static void main(String[] args) {
-        IncrementarHiloSincronizado[] hilos = new IncrementarHiloSincronizado[5];
+        Thread[] hilos = new Thread[5];
 
-        // Lanzar 5 hilos
+        // Lanzar 5 hilos usando Runnable
         for (int i = 0; i < 5; i++) {
-            hilos[i] = new IncrementarHiloSincronizado();
+            hilos[i] = new Thread(new IncrementarHiloSincronizadoRunnable());
             hilos[i].start();
         }
 
@@ -34,7 +33,6 @@ class IncrementarHiloSincronizado extends Thread {
         }
 
         // Mostrar el resultado final
-        System.out.println("Valor final del contador sincronizado: " + contador);
+        System.out.println("Valor final del contador sincronizado (Runnable): " + contador);
     }
 }
-

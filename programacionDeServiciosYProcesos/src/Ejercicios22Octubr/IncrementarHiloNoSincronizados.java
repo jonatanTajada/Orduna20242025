@@ -1,4 +1,4 @@
-package Ejercicios22Octubre;
+package Ejercicios22Octubr;
 
 class IncrementarHiloNoSincronizados extends Thread {
 	
@@ -6,6 +6,7 @@ class IncrementarHiloNoSincronizados extends Thread {
 
 	@Override 
 	public void run() {
+		
 		for (int i = 0; i < 1000; i++) {
 			contador++; 
 		}
@@ -18,6 +19,7 @@ class IncrementarHiloNoSincronizados extends Thread {
 		IncrementarHiloNoSincronizados[] hilos = new IncrementarHiloNoSincronizados[cantidadHilos];
 
 		for (int i = 0; i < cantidadHilos; i++) {
+			
 			hilos[i] = new IncrementarHiloNoSincronizados();
 			hilos[i].start();
 		}

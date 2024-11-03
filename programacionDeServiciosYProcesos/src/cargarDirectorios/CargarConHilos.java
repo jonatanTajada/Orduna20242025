@@ -1,8 +1,13 @@
 package cargarDirectorios;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingWorker;
 
 //SwingWorker:
 				//es una clase que facilita la ejecucion de tareas en segundo plano en aplicaciones Swing.
