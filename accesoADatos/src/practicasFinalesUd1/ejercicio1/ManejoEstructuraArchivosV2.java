@@ -10,44 +10,49 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.*;
 
-
 public class ManejoEstructuraArchivosV2 {
 
 	public static void main(String[] args) {
 		crearMenu();
-    }
-	
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------
-    // Método para crear el menu principal
-    public static void crearMenu() {
-        boolean salir = false;
-
-        while (!salir) {
-            String[] opciones = { "Crear estructura de directorios", "Crear fichero pizzas.xml",
-                    "Leer autores de libros.xml", "Crear y guardar ficheros de alumnos", "Crear fichero de profesores",
-                    "Salir" };
-
-            int opcion = mostrarMenu(opciones);
-
-            switch (opcion) {
-            case 0 -> ejecutarOpcion(() -> crearDirectorios(), "Error al crear directorios");
-            case 1 -> ejecutarOpcion(() -> {
-                try {
-                    crearFicheroPizzas();
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }, "Error al crear fichero pizzas.xml");
-            case 2 -> leerAutoresLibros();
-            case 3 -> ejecutarOpcion(() -> crearFicherosAlumnos(), "Error al crear ficheros de alumnos");
-            case 4 -> ejecutarOpcion(() -> crearFicheroProfesores(), "Error al crear fichero de profesores");
-            case 5 -> salir = true;
-            default -> mostrarMensaje("Opción no válida. Intente de nuevo.", JOptionPane.WARNING_MESSAGE);
-            }
-        }
 	}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 	
+	
+	// Método para crear el menu principal
+	public static void crearMenu() {
+		boolean salir = false;
+
+		while (!salir) {
+			String[] opciones = { "Crear estructura de directorios", "Crear fichero pizzas.xml",
+					"Leer autores de libros.xml", "Crear y guardar ficheros de alumnos", "Crear fichero de profesores",
+					"Salir" };
+
+			int opcion = mostrarMenu(opciones);
+
+			switch (opcion) {
+			case 0 -> ejecutarOpcion(() -> crearDirectorios(), "Error al crear directorios");
+
+			case 1 -> ejecutarOpcion(() -> {
+				try {
+					crearFicheroPizzas();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}, "Error al crear fichero pizzas.xml");
+
+			case 2 -> ejecutarOpcion(() -> leerAutoresLibros(), "Error al leer autores de libros.xml");
+
+			case 3 -> ejecutarOpcion(() -> crearFicherosAlumnos(), "Error al crear ficheros de alumnos");
+
+			case 4 -> ejecutarOpcion(() -> crearFicheroProfesores(), "Error al crear fichero de profesores");
+
+			case 5 -> salir = true;
+
+			default -> mostrarMensaje("Opción no válida. Intente de nuevo.", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+	}
 
 	// Método para crear la estructura de directorios
 	public static void crearDirectorios() throws IOException {
@@ -56,6 +61,7 @@ public class ManejoEstructuraArchivosV2 {
 		crearDirectorio("profesores");
 		mostrarMensaje("Estructura de directorios creada.", JOptionPane.INFORMATION_MESSAGE);
 	}
+	
 
 	// Método para crear el fichero pizzas.xml con sus ingredientes
 	public static void crearFicheroPizzas() throws Exception {
@@ -71,7 +77,7 @@ public class ManejoEstructuraArchivosV2 {
 
 	// Método para leer el fichero libros.xml y mostrar autores o crearlo si no
 	// existe y preguntar si desea leer el fichero
-	public static void leerAutoresLibros() {
+	public static void leerAutoresLibros() throws IOException {
 		File librosFile = new File("ejercicios/libros.xml");
 
 		if (librosFile.exists()) {

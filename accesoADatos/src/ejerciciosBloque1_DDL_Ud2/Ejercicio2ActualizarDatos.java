@@ -17,6 +17,7 @@ public class Ejercicio2ActualizarDatos {
 
             // 1. Añadir la columna departamento_id a la tabla Empleado
             String sqlAnadirColumna = "ALTER TABLE Empleado ADD COLUMN departamento_id INT";
+            
             try (PreparedStatement psAnadirColumn = conexion.prepareStatement(sqlAnadirColumna)) {
             	psAnadirColumn.executeUpdate();
                 System.out.println("La columna se ha creado correctamente en la tabla empleado!");

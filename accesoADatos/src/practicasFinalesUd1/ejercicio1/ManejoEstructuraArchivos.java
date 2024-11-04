@@ -58,6 +58,8 @@ public class ManejoEstructuraArchivos {
 		Files.createDirectories(Paths.get("ejercicios"));
 		Files.createDirectories(Paths.get("alumnos"));
 		Files.createDirectories(Paths.get("profesores"));
+		System.out.println("Ruta de trabajo actual: " + new File(".").getAbsolutePath());
+
 		System.out.println("Estructura de directorios creada.");
 	}
 
