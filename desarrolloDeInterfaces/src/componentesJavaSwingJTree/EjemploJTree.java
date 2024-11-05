@@ -11,15 +11,9 @@ import java.awt.*;
 
 public class EjemploJTree extends JFrame {
 
+	private static final long serialVersionUID = -7561219354315489108L;
 	
-	//   MIRAR SI HACERLO DE NUEVO,, NO ME COGE IMAGEN Y TAMPOCO ME GUSTA COMO ESCRIBE EN LA TABLA...REVISAR!!
-	
-	
-	
-	
-	
-	
-    private JTree tree;
+	private JTree tree;
     private JPanel panelDerecho;
     private JTable rutaTabla;
     private DefaultTableModel tableModel;
@@ -32,54 +26,69 @@ public class EjemploJTree extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Crear los nodos del árbol con nombres imaginativos
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Mundo");
-        DefaultMutableTreeNode carpeta1 = new DefaultMutableTreeNode("Aventuras");
-        DefaultMutableTreeNode carpeta2 = new DefaultMutableTreeNode("Secretos");
+        // Crear los nodos del árbol con nombres similares a los de la imagen
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Carpeta");
+        DefaultMutableTreeNode subCarpeta = new DefaultMutableTreeNode("SubCarpeta");
+        
+        
+        // Nodos hoja
+        DefaultMutableTreeNode archivo1 = new DefaultMutableTreeNode("Archivo1");
+        DefaultMutableTreeNode archivo2 = new DefaultMutableTreeNode("Archivo2");
+        DefaultMutableTreeNode archivo3 = new DefaultMutableTreeNode("Archivo3");
+        DefaultMutableTreeNode archivo4 = new DefaultMutableTreeNode("Archivo4");
+        DefaultMutableTreeNode archivo5 = new DefaultMutableTreeNode("Archivo5");
+        DefaultMutableTreeNode archivo6 = new DefaultMutableTreeNode("Archivo6");
 
-        DefaultMutableTreeNode nodoHoja1 = new DefaultMutableTreeNode("Piratas");
-        DefaultMutableTreeNode nodoHoja2 = new DefaultMutableTreeNode("Tesoros");
-        DefaultMutableTreeNode nodoHoja3 = new DefaultMutableTreeNode("Magia");
-        DefaultMutableTreeNode nodoHoja4 = new DefaultMutableTreeNode("Hechizos");
+        
+        // Construir la jerarquia del arbol
+        root.add(subCarpeta);
+        subCarpeta.add(archivo1);
+        subCarpeta.add(archivo2);
+        subCarpeta.add(archivo3);
+        root.add(archivo4);
+        root.add(archivo5);
+        root.add(archivo6);
 
-        // Construir la jerarquía
-        root.add(carpeta1);
-        root.add(carpeta2);
-        carpeta1.add(nodoHoja1);
-        carpeta1.add(nodoHoja2);
-        carpeta2.add(nodoHoja3);
-        carpeta2.add(nodoHoja4);
-
-        // Crear el modelo del árbol
+        // Crear el modelo del arbol
         DefaultTreeModel model = new DefaultTreeModel(root);
         tree = new JTree(model);
 
-        // Personalizar los íconos de los nodos hoja (sin hijos)
+        
+        // Cargar y redimensionar el icono para los nodos hoja
         DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-        renderer.setLeafIcon(new ImageIcon("D:\\PROGRAMACION\\DAM ORDUNA 2024_2025\\SegundoAnio\\workspaceEclipseSegundoAnioOrduna\\desarrolloDeInterfaces\\imgNodoHoja.png")); // Cambia la ruta al ícono que prefieras
+        ImageIcon leafIcon = new ImageIcon("imgNodoHoja.jpg");
+        
+        // Verificar el tamaño de la imagen y redimensionarla
+        if (leafIcon.getIconWidth() > 16 || leafIcon.getIconHeight() > 16) {
+            Image scaledImage = leafIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+            leafIcon = new ImageIcon(scaledImage);
+        }
+        
+        renderer.setLeafIcon(leafIcon);
         tree.setCellRenderer(renderer);
+        
 
-        // Panel derecho que muestra la información del nodo seleccionado
+        // Panel derecho para mostrar el nodo seleccionado
         panelDerecho = new JPanel();
         panelDerecho.setBackground(Color.GREEN);
-        JLabel tituloPanel = new JLabel("Selecciona un nodo");
+        JLabel tituloPanel = new JLabel("Titulo Panel3");
         panelDerecho.add(tituloPanel);
 
-        // Crear la tabla para almacenar las rutas seleccionadas
+        // Crear  tabla para almacenar rutas seleccionadas
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Ruta");
-
         rutaTabla = new JTable(tableModel);
         JScrollPane tablaScrollPane = new JScrollPane(rutaTabla);
 
-        // Escuchar la selección de nodos en el árbol
+        
+        // Escuchar la seleccion de nodos en el arbol
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
                 DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 if (selectedNode != null) {
                     String selectedNodeName = selectedNode.toString();
-                    tituloPanel.setText("Nodo seleccionado: " + selectedNodeName); // Cambiar el título del panel con el nombre del nodo seleccionado
+                    tituloPanel.setText("Nodo seleccionado: " + selectedNodeName);
 
                     // Obtener la ruta con separadores "/"
                     String ruta = e.getPath().toString().replace(", ", "/").replace("[", "").replace("]", "");
@@ -89,21 +98,25 @@ public class EjemploJTree extends JFrame {
                 }
             }
         });
+        
 
-        // Crear el SplitPane que divide el árbol y el panel derecho
+        // Crear el SplitPane que divide el arbol y el panel derecho
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(tree), panelDerecho);
-        splitPane.setDividerLocation(200); // Ajustar el tamaño inicial de las dos áreas
+        splitPane.setDividerLocation(300); 
 
         // Añadir los componentes al JFrame
-        add(new JLabel("Componente JTree", JLabel.CENTER), BorderLayout.NORTH); // Título superior
-        add(splitPane, BorderLayout.CENTER); // Árbol y panel derecho
-        add(tablaScrollPane, BorderLayout.SOUTH); // Añadir la tabla en lugar del JTextArea
+        add(new JLabel("Componente JTree", JLabel.CENTER), BorderLayout.NORTH);
+        add(splitPane, BorderLayout.CENTER); 
+        add(tablaScrollPane, BorderLayout.SOUTH); 
 
-        // Hacer visible la ventana
+      
         setVisible(true);
     }
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+    
     public static void main(String[] args) {
+    	
         SwingUtilities.invokeLater(() -> new EjemploJTree());
     }
 }
