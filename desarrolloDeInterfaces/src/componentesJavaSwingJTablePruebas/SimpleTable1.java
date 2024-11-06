@@ -45,7 +45,7 @@ public class SimpleTable1 extends JFrame {
 		  
 		  // Configurar ventana
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        pack();
+	        setSize(700,600);
 	        setVisible(true);
 	}
 	
