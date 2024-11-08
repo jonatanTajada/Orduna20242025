@@ -79,6 +79,7 @@ public class ControladorGasolinera {
     }
 
     private void cancelarCarga() {
+    	
         if (hiloCarga != null && hiloCarga.isAlive()) {
             hiloCarga.interrupt();
         }
