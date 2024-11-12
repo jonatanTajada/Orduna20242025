@@ -18,7 +18,7 @@ public class EscribirFicheroBinario6 {
 				dos.writeUTF(departamentos[i]);
 				dos.writeInt(empleados[i]);
 			}
-			System.out.println("Fichero binario empleados.dat creado con éxito.");
+			System.out.println("Fichero binario empleados.dat creado con exito.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

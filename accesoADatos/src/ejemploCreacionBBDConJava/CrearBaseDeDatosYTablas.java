@@ -13,12 +13,12 @@ public class CrearBaseDeDatosYTablas {
 
         try {
             // Conectar a MySQL sin especificar una base de datos (nivel de servidor)
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "password");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "1234");
             
             stmt = con.createStatement();
 
          
-            String sqlCreateDB = "CREATE DATABASE MiNuevaBaseDeDatos";
+            String sqlCreateDB = "CREATE DATABASE  MiNuevaBaseDeDatos";
             stmt.executeUpdate(sqlCreateDB);
             System.out.println("Base de datos 'MiNuevaBaseDeDatos' creada.");
 

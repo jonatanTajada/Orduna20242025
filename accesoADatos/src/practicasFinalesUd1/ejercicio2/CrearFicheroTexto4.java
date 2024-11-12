@@ -8,9 +8,9 @@ import java.io.IOException;
 
 public class CrearFicheroTexto4 {
 	public static void main(String[] args) {
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("ruta/fichero.txt"))) {
-			writer.write("Ejemplo de escritura en un fichero de texto o txt");
-			System.out.println("Fichero de texto creado y escrito con éxito.");
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("notas.txt"))) {
+			writer.write("Mañana estudias DAO.");
+			System.out.println("Fichero guardado con exito.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

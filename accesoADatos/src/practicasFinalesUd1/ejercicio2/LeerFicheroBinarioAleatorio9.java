@@ -8,7 +8,9 @@ import java.io.RandomAccessFile;
 public class LeerFicheroBinarioAleatorio9 {
 	
     public static void main(String[] args) {
+    	
         try (RandomAccessFile raf = new RandomAccessFile("alumnos.dat", "r")) {
+        	
             while (raf.getFilePointer() < raf.length()) {
                 String apellido = raf.readUTF();
                 int edad = raf.readInt();

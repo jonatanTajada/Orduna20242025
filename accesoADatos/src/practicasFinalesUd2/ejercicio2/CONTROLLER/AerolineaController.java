@@ -8,7 +8,7 @@ import practicasFinalesUd2.ejercicio2.SERVICE.AerolineaService;
 import practicasFinalesUd2.ejercicio2.SERVICE.AerolineaServiceImpl;
 
 
-// me hace todo bien menos que no hace el registro en la base de datos,, pero si por consola,, COMPROBNAR QUE PASA!!!!
+
 
 
 public class AerolineaController {

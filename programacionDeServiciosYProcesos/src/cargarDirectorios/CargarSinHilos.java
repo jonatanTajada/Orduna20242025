@@ -15,11 +15,12 @@ import javax.swing.SwingUtilities;
 public class CargarSinHilos extends JFrame {
 
     private static final long serialVersionUID = 6316360495311821030L;
+    
     private JTextArea textArea;
     private boolean cancelado = false;
 
     public static void main(String[] args) {
-        new CargarSinHilos();
+        SwingUtilities.invokeLater(()-> new CargarSinHilos());
     }
 
     public CargarSinHilos() {
@@ -43,7 +44,7 @@ public class CargarSinHilos extends JFrame {
         });
     }
 
-    private void cargarDirectorios() {
+    private void cargarDirectorios() { 
     	
         
         File unidadC = new File("C:\\Users\\Jonathan\\Desktop");

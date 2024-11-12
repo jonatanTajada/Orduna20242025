@@ -19,7 +19,7 @@ public class EscribirFicheroBinarioAleatorio8 {
                 raf.writeInt(edades[i]);
                 raf.writeDouble(notas[i]);
             }
-            System.out.println("Fichero binario aleatorio alumnos.dat creado con éxito.");
+            System.out.println("Fichero binario random alumnos.dat creado con exito.");
         } catch (IOException e) {
             e.printStackTrace();
         }

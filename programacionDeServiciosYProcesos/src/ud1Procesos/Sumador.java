@@ -3,6 +3,7 @@ package ud1Procesos;
 public class Sumador {
 
 	public static void main(String[] args) {
+		
 		if (args.length < 2) {
 			System.out.println("Por favor, introduce dos números como argumentos.");
 			return;
