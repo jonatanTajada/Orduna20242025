@@ -51,9 +51,9 @@ public class ModificarArchivoXML {
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("C:\\Users\\Usuario\\Desktop\\Orduna20242025\\accesoADatos\\src\\practicasExamenPrimerTrimestre\\libros.xml"));
+			StreamResult result = new StreamResult(new File("D:\\PROGRAMACION\\DAM ORDUNA 2024_2025\\SegundoAnio\\workspaceEclipseSegundoAnioOrduna\\accesoADatos"));
 			transformer.transform(source, result);
-
+ 
 			System.out.println("Archivo XML actualizado y guardado exitosamente.");
 		} catch (Exception e) {
 			e.printStackTrace();
