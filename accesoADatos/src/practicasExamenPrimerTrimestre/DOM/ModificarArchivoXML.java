@@ -38,7 +38,7 @@ public class ModificarArchivoXML {
 				Element libro = (Element) listaLibros.item(i);
 				String id = libro.getAttribute("id");
 
-				if (id.equals("101")) {
+				if (id.equals(idABuscar)) {
 					
 					libro.getElementsByTagName("precio").item(0).setTextContent(precioNuevo);
 					System.out.println("Precio del libro con Id " + idABuscar + " actualizado a: " + precioNuevo + "€");

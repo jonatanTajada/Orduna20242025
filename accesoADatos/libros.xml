@@ -1,294 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <libreria>
-                                                                                
+                
     
     
-    
-    
-    
-    
-    
-    
-    <libro id="201">
-                                                                  
+    <libro categoria="básico" id="1">
+                                
         
         
-        
-        
-        
-        
-        
-        
-        <titulo>Java para principiantes</titulo>
-                                                                                                                                                                
-        
-        
-        
-        
-        
-        
+        <titulo>Java Básico</titulo>
+                                
         
         
         <autor>Juan Pérez</autor>
-                                                                                                                                                               
+                                
         
         
-        
-        
-        
-        
-        
-        
-        <precio>150.99</precio>
-                                                                                                                                                            
-    
-    
-    
-    
-    
-    
+        <precio>32,99</precio>
+                            
     
     
     </libro>
-                                                                                
-  
+                
     
     
-    
-    
-    
-    
-    
-    
-    
-    <libro id="102">
-                                                                                                                                                                
- 
+    <libro categoria="básico" id="2">
+                                
         
         
-        
-        
-        
-        
-        
-        
-        <titulo>Avanzando con Java</titulo>
-                                                                                                                                                                
-        
-        
-        
-        
-        
-        
+        <titulo>Java Avanzado</titulo>
+                                
         
         
         <autor>María García</autor>
-                                                                                                                                                               
+                                
         
         
-        
-        
-        
-        
-        
-        
-        <precio>39.99</precio>
-                                                                     
-    
-    
-    
-    
-    
-    
-    
-    
-    </libro>
-                                                                            
-
-
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-    <libro id="3">
-                                                                
-        
-        
-        
-        
-        
-        
-        <titulo>Spring Boot 2</titulo>
-                                                                
-        
-        
-        
-        
-        
-        
-        <autor>Janire Perez</autor>
-                                                                
-        
-        
-        
-        
-        
-        
-        <precio>1500</precio>
-                                                            
-    
-    
-    
-    
-    
-    
-    </libro>
+        <precio>43,99</precio>
                             
-    
-    
-    
-    
-    
-    
-    <libro id="3">
-                                                        
-        
-        
-        
-        
-        
-        <titulo>Spring Boot 2</titulo>
-                                                        
-        
-        
-        
-        
-        
-        <autor>Janire Perez</autor>
-                                                        
-        
-        
-        
-        
-        
-        <precio>1500</precio>
-                                                    
-    
-    
-    
-    
-    
-    </libro>
-                        
-    
-    
-    
-    
-    
-    <libro id="3">
-                                                
-        
-        
-        
-        
-        <titulo>Spring Boot 2</titulo>
-                                                
-        
-        
-        
-        
-        <autor>Janire Perez</autor>
-                                                
-        
-        
-        
-        
-        <precio>1500</precio>
-                                            
-    
-    
-    
-    
-    </libro>
-                    
-    
-    
-    
-    
-    <libro id="3">
-                                        
-        
-        
-        
-        <titulo>Spring Boot 2</titulo>
-                                        
-        
-        
-        
-        <autor>Janire Perez</autor>
-                                        
-        
-        
-        
-        <precio>1500</precio>
-                                    
-    
     
     
     </libro>
                 
     
     
-    
-    <libro id="3">
+    <libro categoria="avanzado" id="3">
                                 
         
         
-        <titulo>Spring Boot 2</titulo>
+        <titulo>Spring Boot</titulo>
                                 
         
         
-        <autor>Janire Perez</autor>
+        <autor>Ana Fernández</autor>
                                 
         
         
-        <precio>1500</precio>
+        <precio>54,99</precio>
                             
     
     
     </libro>
             
-    
-    
-    <libro id="3">
-                        
-        
-        <titulo>Spring Boot 2</titulo>
-                        
-        
-        <autor>Janire Perez</autor>
-                        
-        
-        <precio>1500</precio>
-                    
-    
-    </libro>
-        
-    
-    <libro id="3">
-                
-        <titulo>Spring Boot 2</titulo>
-                
-        <autor>Janire Perez</autor>
-                
-        <precio>1500</precio>
-            
-    </libro>
-    
+
+
 </libreria>
