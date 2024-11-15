@@ -1,4 +1,4 @@
-package Ejercicios22Octubre;
+package ejercicios22Octubre;
 
 public class MyOwnCommandLineArguments {
 
