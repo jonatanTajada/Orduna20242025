@@ -17,6 +17,7 @@ CREATE TABLE productos (
     cantidad INT DEFAULT 0,       -- Puedes decidir si mantener esta columna o usar solo stock
     precio DOUBLE NOT NULL,
     descripcion VARCHAR(255),
+    activo TINYINT(1) DEFAULT 1,
     FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
@@ -68,5 +69,5 @@ CREATE TABLE linea_ventas (
     FOREIGN KEY (producto_id) REFERENCES productos(id)
 );
 
-
+-- UPDATE productos SET activo = 1;
 

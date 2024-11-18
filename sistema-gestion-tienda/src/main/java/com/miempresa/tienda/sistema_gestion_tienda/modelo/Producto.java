@@ -11,20 +11,23 @@ public class Producto {
 	private int stock;
 	private double precio;
 	private Categoria categoria;
+	private boolean activo;
 
 	// Constructor vacío
 	public Producto() {
 	}
 
 	// Constructor completo
-	public Producto(int id, String nombre, String descripcion, int stock, double precio, Categoria categoria) {
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.stock = stock;
-		this.precio = precio;
-		this.categoria = categoria;
+	public Producto(int id, String nombre, String descripcion, int stock, double precio, Categoria categoria, boolean activo) {
+	    this.id = id;
+	    this.nombre = nombre;
+	    this.descripcion = descripcion;
+	    this.stock = stock;
+	    this.precio = precio;
+	    this.categoria = categoria;
+	    this.activo = activo;
 	}
+
 
 	// Getters y Setters
 	public int getId() {
@@ -74,10 +77,19 @@ public class Producto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	
+	public boolean isActivo() {
+	    return activo;
+	}
+
+	public void setActivo(boolean activo) {
+	    this.activo = activo;
+	}
 
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", stock=" + stock
-				+ ", precio=" + precio + ", categoria=" + categoria.getNombre() + "]";
+	    return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", stock=" + stock
+	            + ", precio=" + precio + ", categoria=" + categoria.getNombre() + ", activo=" + (activo ? "Activo" : "Inactivo") + "]";
 	}
+
 }

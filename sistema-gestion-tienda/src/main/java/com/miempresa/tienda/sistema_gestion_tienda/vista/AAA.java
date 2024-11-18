@@ -18,17 +18,11 @@ public class GestionProductosVista extends VentanaBase {
 
 	private JTable tablaProductos;
 	private DefaultTableModel modeloTabla;
-	private JTextField txtBuscar;
-	private JComboBox<Categoria> cmbFiltroCategoria;
-	private JComboBox<String> cmbFiltroEstado;
 
 	public GestionProductosVista() {
-
 		super("Gestión de Productos");
 
-		// -----------------------
-		// Panel superior (Filtros y Búsqueda)
-		// -----------------------
+		// Panel superior (Título y búsqueda)
 		JPanel panelSuperior = new JPanel(new BorderLayout());
 		panelSuperior.setBackground(EstiloUI.COLOR_PRIMARIO);
 		panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -38,84 +32,69 @@ public class GestionProductosVista extends VentanaBase {
 		lblTitulo.setForeground(Color.WHITE);
 		panelSuperior.add(lblTitulo, BorderLayout.NORTH);
 
-		JPanel panelFiltros = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panelFiltros.setBackground(EstiloUI.COLOR_PRIMARIO);
-
+		JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelBusqueda.setBackground(EstiloUI.COLOR_PRIMARIO);
 		JLabel lblBuscar = new JLabel("Buscar producto: ");
 		lblBuscar.setForeground(Color.WHITE);
-		txtBuscar = new JTextField(15);
+		JTextField txtBuscar = new JTextField(20);
+		panelBusqueda.add(lblBuscar);
+		panelBusqueda.add(txtBuscar);
+		panelSuperior.add(panelBusqueda, BorderLayout.SOUTH);
 
-		JLabel lblFiltroCategoria = new JLabel("Categoría: ");
-		lblFiltroCategoria.setForeground(Color.WHITE);
-		cmbFiltroCategoria = new JComboBox<>();
-		cmbFiltroCategoria.addItem(new Categoria(0, "Todas")); // Opción "Todas"
-
-		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		List<Categoria> categorias = categoriaDAO.obtenerTodas();
-		for (Categoria categoria : categorias) {
-			cmbFiltroCategoria.addItem(categoria);
-		}
-
-		JLabel lblFiltroEstado = new JLabel("Estado: ");
-		lblFiltroEstado.setForeground(Color.WHITE);
-		cmbFiltroEstado = new JComboBox<>(new String[] { "Todos", "Activo", "Inactivo" });
-
-		panelFiltros.add(lblBuscar);
-		panelFiltros.add(txtBuscar);
-		panelFiltros.add(lblFiltroCategoria);
-		panelFiltros.add(cmbFiltroCategoria);
-		panelFiltros.add(lblFiltroEstado);
-		panelFiltros.add(cmbFiltroEstado);
-
-		panelSuperior.add(panelFiltros, BorderLayout.SOUTH);
 		add(panelSuperior, BorderLayout.NORTH);
 
-		// -----------------------
 		// Panel central (Tabla)
-		// -----------------------
 		String[] columnas = { "ID", "Nombre", "Descripción", "Precio", "Stock", "Categoría", "Estado" };
 		modeloTabla = new DefaultTableModel(columnas, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
+
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				switch (columnIndex) {
+				case 0:
+					return Integer.class; // ID
+				case 3:
+					return Double.class; // Precio
+				case 4:
+					return Integer.class; // Stock
+				default:
+					return String.class; // Otros
+				}
+			}
 		};
 
 		tablaProductos = new JTable(modeloTabla);
-		tablaProductos.setAutoCreateRowSorter(true);
+		tablaProductos.setAutoCreateRowSorter(true); // Ordenamiento activado
 		EstiloUI.configurarTabla(tablaProductos);
 
 		JScrollPane scrollTabla = new JScrollPane(tablaProductos);
 		add(scrollTabla, BorderLayout.CENTER);
 
+		// Llenar tabla con datos iniciales
 		llenarTabla();
 
-		// -----------------------
-		// Eventos de Filtros y Búsqueda
-		// -----------------------
+		// Eventos del buscador
 		txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				aplicarFiltros();
+				filtrarTabla(txtBuscar.getText());
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				aplicarFiltros();
+				filtrarTabla(txtBuscar.getText());
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				aplicarFiltros();
+				filtrarTabla(txtBuscar.getText());
 			}
 		});
 
-		cmbFiltroCategoria.addActionListener(e -> aplicarFiltros());
-		cmbFiltroEstado.addActionListener(e -> aplicarFiltros());
-
-		// -----------------------
 		// Panel inferior (Botones)
-		// -----------------------
 		JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		JButton btnAgregar = new JButton("Agregar");
 		JButton btnEditar = new JButton("Editar");
@@ -127,6 +106,7 @@ public class GestionProductosVista extends VentanaBase {
 
 		add(panelInferior, BorderLayout.SOUTH);
 
+		// Eventos de los botones
 		btnAgregar.addActionListener(e -> abrirFormularioAgregar());
 		btnEditar.addActionListener(e -> abrirFormularioEditar());
 		btnCambiarEstado.addActionListener(e -> cambiarEstadoProducto());
@@ -134,43 +114,81 @@ public class GestionProductosVista extends VentanaBase {
 		setVisible(true);
 	}
 
-	private void aplicarFiltros() {
-		String texto = txtBuscar.getText().toLowerCase();
-		Categoria categoriaSeleccionada = (Categoria) cmbFiltroCategoria.getSelectedItem();
-		String estadoSeleccionado = (String) cmbFiltroEstado.getSelectedItem();
+	private void abrirFormularioAgregar() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-		modeloTabla.setRowCount(0); // Limpiar tabla
-		ProductoDAO productoDAO = new ProductoDAO();
-		List<Producto> productos = productoDAO.obtenerTodos();
+		JTextField txtNombre = new JTextField(20);
+		JTextField txtDescripcion = new JTextField(20);
+		JTextField txtPrecio = new JTextField(20);
+		JTextField txtStock = new JTextField(20);
+		JComboBox<Categoria> cmbCategorias = new JComboBox<>();
+		JCheckBox chkActivo = new JCheckBox("Activo");
+		chkActivo.setSelected(true);
 
-		for (Producto producto : productos) {
-			boolean coincideTexto = producto.getNombre().toLowerCase().contains(texto)
-					|| producto.getDescripcion().toLowerCase().contains(texto);
-
-			boolean coincideCategoria = categoriaSeleccionada == null || categoriaSeleccionada.getId() == 0
-					|| producto.getCategoria().getId() == categoriaSeleccionada.getId();
-
-			boolean coincideEstado = estadoSeleccionado.equals("Todos")
-					|| (estadoSeleccionado.equals("Activo") && producto.isActivo())
-					|| (estadoSeleccionado.equals("Inactivo") && !producto.isActivo());
-
-			if (coincideTexto && coincideCategoria && coincideEstado) {
-				modeloTabla.addRow(new Object[] { producto.getId(), producto.getNombre(), producto.getDescripcion(),
-						producto.getPrecio(), producto.getStock(), producto.getCategoria().getNombre(),
-						producto.isActivo() ? "Activo" : "Inactivo" });
-			}
+		CategoriaDAO categoriaDAO = new CategoriaDAO();
+		List<Categoria> categorias = categoriaDAO.obtenerTodas();
+		for (Categoria categoria : categorias) {
+			cmbCategorias.addItem(categoria);
 		}
-	}
 
-	private void llenarTabla() {
-		modeloTabla.setRowCount(0); // Limpiar tabla
-		ProductoDAO productoDAO = new ProductoDAO();
-		List<Producto> productos = productoDAO.obtenerTodos();
+		panel.add(new JLabel("Nombre:"));
+		panel.add(txtNombre);
+		panel.add(new JLabel("Descripción:"));
+		panel.add(txtDescripcion);
+		panel.add(new JLabel("Precio:"));
+		panel.add(txtPrecio);
+		panel.add(new JLabel("Stock:"));
+		panel.add(txtStock);
+		panel.add(new JLabel("Categoría:"));
+		panel.add(cmbCategorias);
+		panel.add(new JLabel("Estado:"));
+		panel.add(chkActivo);
 
-		for (Producto producto : productos) {
-			modeloTabla.addRow(new Object[] { producto.getId(), producto.getNombre(), producto.getDescripcion(),
-					producto.getPrecio(), producto.getStock(), producto.getCategoria().getNombre(),
-					producto.isActivo() ? "Activo" : "Inactivo" });
+		int result = JOptionPane.showConfirmDialog(this, panel, "Agregar Producto", JOptionPane.OK_CANCEL_OPTION);
+
+		if (result == JOptionPane.OK_OPTION) {
+			try {
+				String nombre = txtNombre.getText().trim();
+				String descripcion = txtDescripcion.getText().trim();
+				double precio = Double.parseDouble(txtPrecio.getText().trim());
+				int stock = Integer.parseInt(txtStock.getText().trim());
+				Categoria categoriaSeleccionada = (Categoria) cmbCategorias.getSelectedItem();
+				boolean activo = chkActivo.isSelected();
+
+				if (nombre.isEmpty() || descripcion.isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Los campos Nombre y Descripción son obligatorios.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				ProductoDAO productoDAO = new ProductoDAO();
+				if (productoDAO.existeNombreDuplicado(nombre, -1)) {
+					JOptionPane.showMessageDialog(this, "El nombre del producto ya está en uso.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				Producto nuevoProducto = new Producto();
+				nuevoProducto.setNombre(nombre);
+				nuevoProducto.setDescripcion(descripcion);
+				nuevoProducto.setPrecio(precio);
+				nuevoProducto.setStock(stock);
+				nuevoProducto.setCategoria(categoriaSeleccionada);
+				nuevoProducto.setActivo(activo);
+
+				if (productoDAO.insertar(nuevoProducto)) {
+					JOptionPane.showMessageDialog(this, "Producto agregado correctamente.", "Éxito",
+							JOptionPane.INFORMATION_MESSAGE);
+					llenarTabla();
+				} else {
+					JOptionPane.showMessageDialog(this, "Error al agregar producto.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "Verifique que los campos Precio y Stock sean numéricos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
@@ -298,6 +316,18 @@ public class GestionProductosVista extends VentanaBase {
 		}
 	}
 
+	private void llenarTabla() {
+		modeloTabla.setRowCount(0);
+		ProductoDAO productoDAO = new ProductoDAO();
+		List<Producto> productos = productoDAO.obtenerTodos();
+
+		for (Producto producto : productos) {
+			modeloTabla.addRow(new Object[] { producto.getId(), producto.getNombre(), producto.getDescripcion(),
+					producto.getPrecio(), producto.getStock(), producto.getCategoria().getNombre(),
+					producto.isActivo() ? "Activo" : "Inactivo" });
+		}
+	}
+
 	private void filtrarTabla(String texto) {
 		modeloTabla.setRowCount(0);
 		ProductoDAO productoDAO = new ProductoDAO();
@@ -312,83 +342,4 @@ public class GestionProductosVista extends VentanaBase {
 			}
 		}
 	}
-
-	private void abrirFormularioAgregar() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-		JTextField txtNombre = new JTextField(20);
-		JTextField txtDescripcion = new JTextField(20);
-		JTextField txtPrecio = new JTextField(20);
-		JTextField txtStock = new JTextField(20);
-		JComboBox<Categoria> cmbCategorias = new JComboBox<>();
-		JCheckBox chkActivo = new JCheckBox("Activo");
-		chkActivo.setSelected(true);
-
-		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		List<Categoria> categorias = categoriaDAO.obtenerTodas();
-		for (Categoria categoria : categorias) {
-			cmbCategorias.addItem(categoria);
-		}
-
-		panel.add(new JLabel("Nombre:"));
-		panel.add(txtNombre);
-		panel.add(new JLabel("Descripción:"));
-		panel.add(txtDescripcion);
-		panel.add(new JLabel("Precio:"));
-		panel.add(txtPrecio);
-		panel.add(new JLabel("Stock:"));
-		panel.add(txtStock);
-		panel.add(new JLabel("Categoría:"));
-		panel.add(cmbCategorias);
-		panel.add(new JLabel("Estado:"));
-		panel.add(chkActivo);
-
-		int result = JOptionPane.showConfirmDialog(this, panel, "Agregar Producto", JOptionPane.OK_CANCEL_OPTION);
-
-		if (result == JOptionPane.OK_OPTION) {
-			try {
-				String nombre = txtNombre.getText().trim();
-				String descripcion = txtDescripcion.getText().trim();
-				double precio = Double.parseDouble(txtPrecio.getText().trim());
-				int stock = Integer.parseInt(txtStock.getText().trim());
-				Categoria categoriaSeleccionada = (Categoria) cmbCategorias.getSelectedItem();
-				boolean activo = chkActivo.isSelected();
-
-				if (nombre.isEmpty() || descripcion.isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Los campos Nombre y Descripción son obligatorios.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-				ProductoDAO productoDAO = new ProductoDAO();
-				if (productoDAO.existeNombreDuplicado(nombre, -1)) {
-					JOptionPane.showMessageDialog(this, "El nombre del producto ya está en uso.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-				Producto nuevoProducto = new Producto();
-				nuevoProducto.setNombre(nombre);
-				nuevoProducto.setDescripcion(descripcion);
-				nuevoProducto.setPrecio(precio);
-				nuevoProducto.setStock(stock);
-				nuevoProducto.setCategoria(categoriaSeleccionada);
-				nuevoProducto.setActivo(activo);
-
-				if (productoDAO.insertar(nuevoProducto)) {
-					JOptionPane.showMessageDialog(this, "Producto agregado correctamente.", "Éxito",
-							JOptionPane.INFORMATION_MESSAGE);
-					llenarTabla();
-				} else {
-					JOptionPane.showMessageDialog(this, "Error al agregar producto.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Verifique que los campos Precio y Stock sean numéricos.", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
-	}
-
 }
