@@ -25,8 +25,9 @@ public class VentanaBase extends JFrame {
 	public VentanaBase(String titulo) {
 		// Configuración básica
 		setTitle(titulo);
-		setSize(600, 400);
+		setSize(700, 700);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 
 		// Panel superior con logo y nombre de empresa

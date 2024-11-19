@@ -5,8 +5,13 @@ USE tienda;
 -- Tabla de categorías
 CREATE TABLE categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(255),
+    #activo TINYINT(1) DEFAULT 1 -- '0' significa inactivo, '1' significa activo
+    activo BOOLEAN DEFAULT TRUE -- 'TRUE' significa activo, 'FALSE' significa inactivo
+
 );
+
 
 -- Tabla de productos
 CREATE TABLE productos (
@@ -17,7 +22,8 @@ CREATE TABLE productos (
     cantidad INT DEFAULT 0,       -- Puedes decidir si mantener esta columna o usar solo stock
     precio DOUBLE NOT NULL,
     descripcion VARCHAR(255),
-    activo TINYINT(1) DEFAULT 1,
+    #activo TINYINT(1) DEFAULT 0,
+    activo BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
@@ -70,4 +76,8 @@ CREATE TABLE linea_ventas (
 );
 
 -- UPDATE productos SET activo = 1;
+ -- SET SQL_SAFE_UPDATES = 0;
+
+ -- UPDATE categorias SET activo = 1 WHERE activo = 0;
+
 

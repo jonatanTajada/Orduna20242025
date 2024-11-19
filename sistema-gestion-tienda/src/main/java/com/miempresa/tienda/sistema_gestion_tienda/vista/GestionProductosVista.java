@@ -6,10 +6,25 @@ import java.awt.FlowLayout;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+
 import com.miempresa.tienda.sistema_gestion_tienda.dao.CategoriaDAO;
 import com.miempresa.tienda.sistema_gestion_tienda.dao.ProductoDAO;
 import com.miempresa.tienda.sistema_gestion_tienda.estilos.EstiloUI;
@@ -23,13 +38,12 @@ public class GestionProductosVista extends VentanaBase {
 	private JTextField txtBuscar;
 	private JComboBox<Categoria> cmbFiltroCategoria;
 	private JComboBox<String> cmbFiltroEstado;
+	private JLabel lblNotificacion;
 
 	public GestionProductosVista() {
 		super("Gestión de Productos");
 
-		// -----------------------
 		// Panel superior (Filtros y Búsqueda)
-		// -----------------------
 		JPanel panelSuperior = new JPanel(new BorderLayout());
 		panelSuperior.setBackground(EstiloUI.COLOR_PRIMARIO);
 		panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -49,7 +63,7 @@ public class GestionProductosVista extends VentanaBase {
 		JLabel lblFiltroCategoria = new JLabel("Categoría: ");
 		lblFiltroCategoria.setForeground(Color.WHITE);
 		cmbFiltroCategoria = new JComboBox<>();
-		cmbFiltroCategoria.addItem(new Categoria(0, "Todas")); // Opción "Todas"
+		cmbFiltroCategoria.addItem(new Categoria(0, "Todas"));
 
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
 		List<Categoria> categorias = categoriaDAO.obtenerTodas();
@@ -74,9 +88,7 @@ public class GestionProductosVista extends VentanaBase {
 		panelSuperior.add(panelFiltros, BorderLayout.SOUTH);
 		add(panelSuperior, BorderLayout.NORTH);
 
-		// -----------------------
 		// Panel central (Tabla)
-		// -----------------------
 		String[] columnas = { "ID", "Nombre", "Descripción", "Precio", "Stock", "Categoría", "Estado" };
 		modeloTabla = new DefaultTableModel(columnas, 0) {
 			@Override
@@ -94,9 +106,7 @@ public class GestionProductosVista extends VentanaBase {
 
 		llenarTabla();
 
-		// -----------------------
 		// Eventos de Filtros y Búsqueda
-		// -----------------------
 		txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
@@ -118,26 +128,35 @@ public class GestionProductosVista extends VentanaBase {
 		cmbFiltroEstado.addActionListener(e -> aplicarFiltros());
 		btnLimpiarFiltros.addActionListener(e -> limpiarFiltros());
 
-		// -----------------------
-		// Panel inferior (Botones)
-		// -----------------------
-		JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+		// Panel inferior (Botones y Notificación)
+		JPanel panelInferior = new JPanel(new BorderLayout());
+		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+
 		JButton btnAgregar = new JButton("Agregar");
 		JButton btnEditar = new JButton("Editar");
 		JButton btnCambiarEstado = new JButton("Activar/Inactivar");
-		JButton btnExportarCSV = new JButton("Exportar a CSV"); // Botón nuevo
+		JButton btnExportarCSV = new JButton("Exportar a CSV");
 
-		panelInferior.add(btnAgregar);
-		panelInferior.add(btnEditar);
-		panelInferior.add(btnCambiarEstado);
-		panelInferior.add(btnExportarCSV); // Añadir el botón al panel
+		panelBotones.add(btnAgregar);
+		panelBotones.add(btnEditar);
+		panelBotones.add(btnCambiarEstado);
+		panelBotones.add(btnExportarCSV);
+
+		panelInferior.add(panelBotones, BorderLayout.NORTH);
+
+		lblNotificacion = new JLabel(" ");
+		lblNotificacion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNotificacion.setFont(EstiloUI.FUENTE_GENERAL);
+		lblNotificacion.setForeground(Color.DARK_GRAY); // Cambiar color del mensaje a más visible
+		panelInferior.add(lblNotificacion, BorderLayout.SOUTH);
 
 		add(panelInferior, BorderLayout.SOUTH);
 
+		// Acciones de los botones
 		btnAgregar.addActionListener(e -> abrirFormularioAgregar());
 		btnEditar.addActionListener(e -> abrirFormularioEditar());
 		btnCambiarEstado.addActionListener(e -> cambiarEstadoProducto());
-		btnExportarCSV.addActionListener(e -> exportarTablaACSV()); // Acción para el nuevo botón
+		btnExportarCSV.addActionListener(e -> exportarTablaACSV());
 
 		setVisible(true);
 	}
@@ -182,31 +201,50 @@ public class GestionProductosVista extends VentanaBase {
 	}
 
 	private void exportarTablaACSV() {
+		
+		if (modeloTabla.getRowCount() == 0) {
+			mostrarNotificacion("No hay datos para exportar.", Color.RED);
+			return;
+		}
+
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Guardar como CSV");
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
 		int userSelection = fileChooser.showSaveDialog(this);
 
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
-			try (FileWriter writer = new FileWriter(fileChooser.getSelectedFile() + ".csv")) {
+			String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+
+			// Asegurarse de que el archivo tenga extensión ".csv"
+			if (!filePath.toLowerCase().endsWith(".csv")) {
+				filePath += ".csv";
+			}
+
+			try (FileWriter writer = new FileWriter(filePath)) {
 				// Escribir encabezados
 				for (int i = 0; i < modeloTabla.getColumnCount(); i++) {
-					writer.write(modeloTabla.getColumnName(i) + ",");
+					writer.write(modeloTabla.getColumnName(i));
+					if (i < modeloTabla.getColumnCount() - 1) {
+						writer.write(","); // Separador
+					}
 				}
 				writer.write("\n");
 
-				// Escribir datos de la tabla
+				// Escribir datos
 				for (int i = 0; i < modeloTabla.getRowCount(); i++) {
 					for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
-						writer.write(modeloTabla.getValueAt(i, j).toString() + ",");
+						writer.write(String.valueOf(modeloTabla.getValueAt(i, j)));
+						if (j < modeloTabla.getColumnCount() - 1) {
+							writer.write(","); // Separador
+						}
 					}
 					writer.write("\n");
 				}
 
-				JOptionPane.showMessageDialog(this, "Archivo CSV exportado correctamente.", "Éxito",
-						JOptionPane.INFORMATION_MESSAGE);
+				mostrarNotificacion("Archivo CSV exportado correctamente.", new Color(0, 128, 255)); // Azul legible
 			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(this, "Error al guardar el archivo CSV.", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				mostrarNotificacion("Error al guardar el archivo CSV.", Color.RED);
 			}
 		}
 	}
@@ -215,8 +253,7 @@ public class GestionProductosVista extends VentanaBase {
 		int filaSeleccionada = tablaProductos.getSelectedRow();
 
 		if (filaSeleccionada == -1) {
-			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto para editar.", "Advertencia",
-					JOptionPane.WARNING_MESSAGE);
+			mostrarNotificacion("Debe seleccionar un producto para editar.", Color.RED);
 			return;
 		}
 
@@ -227,8 +264,7 @@ public class GestionProductosVista extends VentanaBase {
 		Producto producto = productoDAO.obtenerPorId(idProducto);
 
 		if (producto == null) {
-			JOptionPane.showMessageDialog(this, "Error al cargar los datos del producto.", "Error",
-					JOptionPane.ERROR_MESSAGE);
+			mostrarNotificacion("Error al cargar los datos del producto.", Color.RED);
 			return;
 		}
 
@@ -276,15 +312,11 @@ public class GestionProductosVista extends VentanaBase {
 				boolean activo = chkActivo.isSelected();
 
 				if (nombre.isEmpty() || descripcion.isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Los campos Nombre y Descripción son obligatorios.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					return;
+					throw new IllegalArgumentException("Los campos Nombre y Descripción son obligatorios.");
 				}
 
 				if (productoDAO.existeNombreDuplicado(nombre, producto.getId())) {
-					JOptionPane.showMessageDialog(this, "El nombre del producto ya está en uso.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					return;
+					throw new IllegalArgumentException("El nombre del producto ya está en uso.");
 				}
 
 				producto.setNombre(nombre);
@@ -295,44 +327,70 @@ public class GestionProductosVista extends VentanaBase {
 				producto.setActivo(activo);
 
 				if (productoDAO.actualizar(producto)) {
-					JOptionPane.showMessageDialog(this, "Producto actualizado correctamente.", "Éxito",
-							JOptionPane.INFORMATION_MESSAGE);
+					mostrarNotificacion("Producto actualizado correctamente.", new Color(0, 128, 255)); // Azul legible
 					llenarTabla();
 				} else {
-					JOptionPane.showMessageDialog(this, "Error al actualizar producto.", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					mostrarNotificacion("Error al actualizar el producto.", Color.RED);
 				}
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Verifique que los campos Precio y Stock sean numéricos.", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				mostrarNotificacion("Verifique que los campos Precio y Stock sean numéricos.", Color.RED);
+			} catch (IllegalArgumentException ex) {
+				mostrarNotificacion(ex.getMessage(), Color.RED);
 			}
 		}
 	}
 
 	private void cambiarEstadoProducto() {
-		int filaSeleccionada = tablaProductos.getSelectedRow();
+		
+	    int[] filasSeleccionadas = tablaProductos.getSelectedRows();
 
-		if (filaSeleccionada == -1) {
-			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto.", "Advertencia",
-					JOptionPane.WARNING_MESSAGE);
-			return;
-		}
+	    if (filasSeleccionadas.length == 0) {
+	        JOptionPane.showMessageDialog(this, "Debe seleccionar al menos un producto.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+	        return;
+	    }
 
-		int filaModelo = tablaProductos.convertRowIndexToModel(filaSeleccionada);
-		int idProducto = (int) modeloTabla.getValueAt(filaModelo, 0);
-		String estadoActual = (String) modeloTabla.getValueAt(filaModelo, 6);
+	    int confirmacion = JOptionPane.showConfirmDialog(
+	            this,
+	            "¿Está seguro de cambiar el estado de los productos seleccionados?",
+	            "Confirmar acción",
+	            JOptionPane.YES_NO_OPTION
+	    );
 
-		boolean nuevoEstado = estadoActual.equals("Inactivo");
+	    if (confirmacion != JOptionPane.YES_OPTION) {
+	        return; // Si el usuario cancela, no hacer nada
+	    }
 
-		ProductoDAO productoDAO = new ProductoDAO();
-		if (productoDAO.cambiarEstado(idProducto, nuevoEstado)) {
-			JOptionPane.showMessageDialog(this,
-					"El producto ha sido " + (nuevoEstado ? "activado" : "desactivado") + " correctamente.", "Éxito",
-					JOptionPane.INFORMATION_MESSAGE);
-			llenarTabla();
-		} else {
-			JOptionPane.showMessageDialog(this, "Error al cambiar el estado.", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+	    ProductoDAO productoDAO = new ProductoDAO();
+	    boolean exito = true;
+
+	    for (int fila : filasSeleccionadas) {
+	        int filaModelo = tablaProductos.convertRowIndexToModel(fila);
+	        int idProducto = (int) modeloTabla.getValueAt(filaModelo, 0);
+	        String estadoActual = (String) modeloTabla.getValueAt(filaModelo, 6);
+
+	        boolean nuevoEstado = estadoActual.equals("Inactivo");
+
+	        if (!productoDAO.cambiarEstado(idProducto, nuevoEstado)) {
+	            exito = false; // Si falla un cambio, marcamos el error
+	        }
+	    }
+
+	    if (exito) {
+	        mostrarNotificacion("Estado de los productos cambiado correctamente.", Color.ORANGE);
+	    } else {
+	        mostrarNotificacion("Hubo un error al cambiar el estado de algunos productos.", Color.RED);
+	    }
+
+	    llenarTabla(); // Actualizar la tabla
+	}
+
+
+	private void mostrarNotificacion(String mensaje, Color color) {
+		lblNotificacion.setText(mensaje);
+		lblNotificacion.setForeground(color);
+		Timer timer = new Timer(3000, e -> lblNotificacion.setText(" "));
+		timer.setRepeats(false);
+		timer.start();
 	}
 
 	private void filtrarTabla(String texto) {
@@ -393,16 +451,12 @@ public class GestionProductosVista extends VentanaBase {
 				boolean activo = chkActivo.isSelected();
 
 				if (nombre.isEmpty() || descripcion.isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Los campos Nombre y Descripción son obligatorios.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					return;
+					throw new IllegalArgumentException("Los campos Nombre y Descripción son obligatorios.");
 				}
 
 				ProductoDAO productoDAO = new ProductoDAO();
 				if (productoDAO.existeNombreDuplicado(nombre, -1)) {
-					JOptionPane.showMessageDialog(this, "El nombre del producto ya está en uso.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					return;
+					throw new IllegalArgumentException("El nombre del producto ya está en uso.");
 				}
 
 				Producto nuevoProducto = new Producto();
@@ -414,16 +468,16 @@ public class GestionProductosVista extends VentanaBase {
 				nuevoProducto.setActivo(activo);
 
 				if (productoDAO.insertar(nuevoProducto)) {
-					JOptionPane.showMessageDialog(this, "Producto agregado correctamente.", "Éxito",
-							JOptionPane.INFORMATION_MESSAGE);
+					mostrarNotificacion("Producto agregado correctamente.", new Color(34, 139, 34)); // Verde más
+																										// legible
 					llenarTabla();
 				} else {
-					JOptionPane.showMessageDialog(this, "Error al agregar producto.", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					mostrarNotificacion("Error al agregar producto.", Color.RED);
 				}
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Verifique que los campos Precio y Stock sean numéricos.", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				mostrarNotificacion("Verifique que los campos Precio y Stock sean numéricos.", Color.RED);
+			} catch (IllegalArgumentException ex) {
+				mostrarNotificacion(ex.getMessage(), Color.RED);
 			}
 		}
 	}

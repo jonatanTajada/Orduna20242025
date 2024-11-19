@@ -28,6 +28,7 @@ public class LoginVista {
 	public static void main(String[] args) {
 		JFrame ventana = new JFrame("Sistema Gestión Tienda - Login");
 		ventana.setSize(700, 700);
+		ventana.setLocationRelativeTo(null);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setLayout(new BorderLayout());
 

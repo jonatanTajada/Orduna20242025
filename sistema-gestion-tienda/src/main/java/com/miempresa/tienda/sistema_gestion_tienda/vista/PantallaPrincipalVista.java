@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.miempresa.tienda.sistema_gestion_tienda.estilos.EstiloUI;
+import com.miempresa.tienda.sistema_gestion_tienda.servicios.CategoriaService;
 
 /**
  * Clase que representa la pantalla principal del sistema de gestión de tienda.
@@ -22,16 +23,20 @@ import com.miempresa.tienda.sistema_gestion_tienda.estilos.EstiloUI;
  */
 public class PantallaPrincipalVista {
 
+	private CategoriaService categoriaService;
+
 	/**
-	 * Método principal para iniciar la pantalla principal.
+	 * Constructor de la clase que inicializa la vista principal.
 	 *
-	 * @param args Argumentos de la línea de comandos.
+	 * @param categoriaService Servicio para la gestión de categorías.
 	 */
-	public static void main(String[] args) {
+	public PantallaPrincipalVista(CategoriaService categoriaService) {
+		this.categoriaService = categoriaService;
 
 		// Crear la ventana principal
 		JFrame ventana = new JFrame("Sistema Gestión Tienda - Pantalla Principal");
-		ventana.setSize(800, 600);
+		ventana.setSize(800, 700);
+		ventana.setLocationRelativeTo(null);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setLayout(new BorderLayout());
 
@@ -113,14 +118,13 @@ public class PantallaPrincipalVista {
 		// Eventos del menú
 		// -----------------------
 		itemCategorias.addActionListener(e -> {
-			// Abrir la ventana de gestión de categorías
-			new GestionCategoriasVista();
+		    new GestionCategoriasVista(categoriaService); // Abre la ventana de gestión de categorías
 		});
+
 
 		itemProductos.addActionListener(e -> {
-		    new GestionProductosVista(); // Abrir la ventana de gestión de productos
+			new GestionProductosVista(); // Abrir la ventana de gestión de productos
 		});
-
 
 		itemUsuarios.addActionListener(e -> {
 			JOptionPane.showMessageDialog(ventana, "Módulo de Usuarios en construcción.");
