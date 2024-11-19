@@ -3,6 +3,8 @@ package com.miempresa.tienda.sistema_gestion_tienda.vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -23,7 +25,6 @@ public class GestionProductosVista extends VentanaBase {
 	private JComboBox<String> cmbFiltroEstado;
 
 	public GestionProductosVista() {
-
 		super("Gestión de Productos");
 
 		// -----------------------
@@ -60,12 +61,15 @@ public class GestionProductosVista extends VentanaBase {
 		lblFiltroEstado.setForeground(Color.WHITE);
 		cmbFiltroEstado = new JComboBox<>(new String[] { "Todos", "Activo", "Inactivo" });
 
+		JButton btnLimpiarFiltros = new JButton("Limpiar Filtros");
+
 		panelFiltros.add(lblBuscar);
 		panelFiltros.add(txtBuscar);
 		panelFiltros.add(lblFiltroCategoria);
 		panelFiltros.add(cmbFiltroCategoria);
 		panelFiltros.add(lblFiltroEstado);
 		panelFiltros.add(cmbFiltroEstado);
+		panelFiltros.add(btnLimpiarFiltros);
 
 		panelSuperior.add(panelFiltros, BorderLayout.SOUTH);
 		add(panelSuperior, BorderLayout.NORTH);
@@ -112,6 +116,7 @@ public class GestionProductosVista extends VentanaBase {
 
 		cmbFiltroCategoria.addActionListener(e -> aplicarFiltros());
 		cmbFiltroEstado.addActionListener(e -> aplicarFiltros());
+		btnLimpiarFiltros.addActionListener(e -> limpiarFiltros());
 
 		// -----------------------
 		// Panel inferior (Botones)
@@ -120,16 +125,19 @@ public class GestionProductosVista extends VentanaBase {
 		JButton btnAgregar = new JButton("Agregar");
 		JButton btnEditar = new JButton("Editar");
 		JButton btnCambiarEstado = new JButton("Activar/Inactivar");
+		JButton btnExportarCSV = new JButton("Exportar a CSV"); // Botón nuevo
 
 		panelInferior.add(btnAgregar);
 		panelInferior.add(btnEditar);
 		panelInferior.add(btnCambiarEstado);
+		panelInferior.add(btnExportarCSV); // Añadir el botón al panel
 
 		add(panelInferior, BorderLayout.SOUTH);
 
 		btnAgregar.addActionListener(e -> abrirFormularioAgregar());
 		btnEditar.addActionListener(e -> abrirFormularioEditar());
 		btnCambiarEstado.addActionListener(e -> cambiarEstadoProducto());
+		btnExportarCSV.addActionListener(e -> exportarTablaACSV()); // Acción para el nuevo botón
 
 		setVisible(true);
 	}
@@ -139,7 +147,7 @@ public class GestionProductosVista extends VentanaBase {
 		Categoria categoriaSeleccionada = (Categoria) cmbFiltroCategoria.getSelectedItem();
 		String estadoSeleccionado = (String) cmbFiltroEstado.getSelectedItem();
 
-		modeloTabla.setRowCount(0); // Limpiar tabla
+		modeloTabla.setRowCount(0);
 		ProductoDAO productoDAO = new ProductoDAO();
 		List<Producto> productos = productoDAO.obtenerTodos();
 
@@ -163,14 +171,43 @@ public class GestionProductosVista extends VentanaBase {
 	}
 
 	private void llenarTabla() {
-		modeloTabla.setRowCount(0); // Limpiar tabla
-		ProductoDAO productoDAO = new ProductoDAO();
-		List<Producto> productos = productoDAO.obtenerTodos();
+		aplicarFiltros();
+	}
 
-		for (Producto producto : productos) {
-			modeloTabla.addRow(new Object[] { producto.getId(), producto.getNombre(), producto.getDescripcion(),
-					producto.getPrecio(), producto.getStock(), producto.getCategoria().getNombre(),
-					producto.isActivo() ? "Activo" : "Inactivo" });
+	private void limpiarFiltros() {
+		txtBuscar.setText("");
+		cmbFiltroCategoria.setSelectedIndex(0);
+		cmbFiltroEstado.setSelectedIndex(0);
+		aplicarFiltros();
+	}
+
+	private void exportarTablaACSV() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Guardar como CSV");
+		int userSelection = fileChooser.showSaveDialog(this);
+
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			try (FileWriter writer = new FileWriter(fileChooser.getSelectedFile() + ".csv")) {
+				// Escribir encabezados
+				for (int i = 0; i < modeloTabla.getColumnCount(); i++) {
+					writer.write(modeloTabla.getColumnName(i) + ",");
+				}
+				writer.write("\n");
+
+				// Escribir datos de la tabla
+				for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+					for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
+						writer.write(modeloTabla.getValueAt(i, j).toString() + ",");
+					}
+					writer.write("\n");
+				}
+
+				JOptionPane.showMessageDialog(this, "Archivo CSV exportado correctamente.", "Éxito",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(this, "Error al guardar el archivo CSV.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
