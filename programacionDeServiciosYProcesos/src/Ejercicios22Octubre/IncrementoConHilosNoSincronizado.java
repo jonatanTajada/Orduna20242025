@@ -1,4 +1,4 @@
-package ejercicios22Octubre;
+package Ejercicios22Octubre;
 
 public class IncrementoConHilosNoSincronizado{
 

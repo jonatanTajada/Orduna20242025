@@ -1,7 +1,8 @@
-package com.miempresa.tienda.sistema_gestion_tienda.dao;
+package com.miempresa.tienda.sistema_gestion_tienda.pruebas;
 
 import java.util.List;
 
+import com.miempresa.tienda.sistema_gestion_tienda.dao.CategoriaDAO;
 import com.miempresa.tienda.sistema_gestion_tienda.modelo.Categoria;
 
 public class TestCategoriaDAO {

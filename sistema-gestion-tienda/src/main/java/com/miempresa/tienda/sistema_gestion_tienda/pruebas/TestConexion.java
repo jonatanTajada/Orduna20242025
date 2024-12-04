@@ -1,7 +1,9 @@
-package com.miempresa.tienda.sistema_gestion_tienda.dao;
+package com.miempresa.tienda.sistema_gestion_tienda.pruebas;
 
 
 import java.sql.Connection;
+
+import com.miempresa.tienda.sistema_gestion_tienda.dao.ConexionDB;
 
 public class TestConexion {
 	

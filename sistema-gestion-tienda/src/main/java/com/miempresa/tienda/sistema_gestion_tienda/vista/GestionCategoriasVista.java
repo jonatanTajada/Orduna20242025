@@ -253,23 +253,21 @@ public class GestionCategoriasVista extends JFrame {
 	    Categoria categoria = categoriaService.obtenerPorId(id);
 	    
 	    if (categoria != null) {
-	        // Aquí cambiamos la lógica: si la categoría es activa, la mantenemos activa, si es inactiva, la activamos
-	        if (categoria.isActivo()) {
-	            categoria.setActivo(true);  // Asegura que esté activa
-	        } else {
-	            categoria.setActivo(false);  // Cambia el estado a inactivo
-	        }
+	        // Cambia el estado de la categoría al contrario de su estado actual
+	        boolean nuevoEstado = !categoria.isActivo();  // Si estaba activa, será inactiva y viceversa
+	        categoria.setActivo(nuevoEstado);
 
 	        // Ahora actualizamos la categoría en la base de datos
 	        if (categoriaService.actualizar(categoria)) {
 	            JOptionPane.showMessageDialog(this,
-	                    "La categoría ha sido " + (categoria.isActivo() ? "activada" : "inactivada") + " correctamente.");
+	                    "La categoría ha sido " + (nuevoEstado ? "activada" : "inactivada") + " correctamente.");
 	            llenarTabla();  // Actualiza la tabla para reflejar el nuevo estado
 	        } else {
 	            JOptionPane.showMessageDialog(this, "Error al cambiar el estado de la categoría.");
 	        }
 	    }
 	}
+
 
 	
 	
