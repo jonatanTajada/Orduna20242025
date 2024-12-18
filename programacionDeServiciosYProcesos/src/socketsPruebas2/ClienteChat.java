@@ -7,6 +7,8 @@ import java.io.*;
 import java.net.*;
 
 public class ClienteChat extends JFrame {
+	
+	
 	private JTextArea areaMensajes;
 	private JTextField campoEntrada;
 	private JButton botonEnviar;
